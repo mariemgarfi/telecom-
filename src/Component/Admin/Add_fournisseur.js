@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
+import Banner from "../Banner";
 
 export default function Add_fournisseur() {
   const [nom, setNom] = useState("");
@@ -7,13 +8,11 @@ export default function Add_fournisseur() {
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState();
   const [adress, setAdress] = useState("");
-  const [city, setCity]=useState("");
-  const [state, setState]=useState("");
-  const[code_postal, setCode_postal]=useState("");
-  const [poste_occupé , setPoste_occupé]=useState("");
-  const[Site_Web , setSite_Web] =useState("");
-
-
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [code_postal, setCode_postal] = useState("");
+  const [poste_occupe, setPoste_occupé] = useState("");
+  const [Site_Web, setSite_Web] = useState("");
 
   const ChangeNom = (event) => {
     setNom(event.target.value);
@@ -24,41 +23,41 @@ export default function Add_fournisseur() {
   const ChangeEmail = (event) => {
     setEmail(event.target.value);
   };
-  const ChangePoste_occupé =(event)=>
-  { setPoste_occupé(event.target.value)
+  const ChangePoste_occupé = (event) => {
+    setPoste_occupé(event.target.value);
   };
 
-  const ChangeSite_Web =(event)=>
-  { setSite_Web=(event.target.value)
+  const ChangeSite_Web = (event) => {
+    setSite_Web(event.target.value);
   };
   const ChangeTel = (event) => {
     setTel(event.target.value);
   };
   const ChangeAdress = (event) => {
-    setAdress(event.target.value)
+    setAdress(event.target.value);
   };
-const ChangeCity=(event) =>{
-  setCity(event.target.value)
-};
-const ChangeState=(event) =>{
-  setState(event.target.value)
-};
-const ChangeCode_postal=(event) =>{
-  setCode_postal(event.target.value)
-};
+  const ChangeCity = (event) => {
+    setCity(event.target.value);
+  };
+  const ChangeState = (event) => {
+    setState(event.target.value);
+  };
+  const ChangeCode_postal = (event) => {
+    setCode_postal(event.target.value);
+  };
 
   const HandleSubmit = () => {
     let data = {
       nom: nom,
       prenom: prenom,
       email: email,
-      poste: poste_occupé,
-      site_web :Site_Web,
+      poste_occupe: poste_occupe,
+      site_web: Site_Web,
       tel: tel,
       adress: adress,
-      ville : city,
-      etat : state,
-      code_postal : code_postal,
+      city: city,
+      state: state,
+      code_postal: code_postal,
     };
     console.log("here response", data);
 
@@ -74,7 +73,7 @@ const ChangeCode_postal=(event) =>{
   return (
     <Fragment>
       <div className="app-main__inner">
-        <div className="app-page-title">
+        {/* <div className="app-page-title">
           <div className="page-title-wrapper">
             <div className="page-title-heading">
               <div className="page-title-icon">
@@ -83,18 +82,17 @@ const ChangeCode_postal=(event) =>{
               <div>Ajouter Fournisseur</div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <Banner title="Ajouter Fournisseur" icon="pe-7s-add-user"/>
         <div className="main-card mb-3 card">
           <div className="card-body">
             <h1 className="card-title">Remplir le formulaire</h1>
-            <form >
+            <form>
               <div className="form-row">
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleEmail11" >
-                      Nom
-                      </label>
-                     <input
+                    <label htmlFor="exampleEmail11">Nom</label>
+                    <input
                       name="nom"
                       id="exampleNom"
                       placeholder="Nom"
@@ -106,10 +104,8 @@ const ChangeCode_postal=(event) =>{
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="examplePassword11" >
-                      Prénom
-                     </label>
-                     <input
+                    <label htmlFor="examplePassword11">Prénom</label>
+                    <input
                       name="Prénom"
                       id="examplePassword11"
                       placeholder="Prénom"
@@ -121,10 +117,8 @@ const ChangeCode_postal=(event) =>{
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleEmail" >
-                      Email
-                     </label>
-                     <input
+                    <label htmlFor="exampleEmail">Email</label>
+                    <input
                       name="email"
                       id="exampleEmail11"
                       placeholder="E-mail"
@@ -136,10 +130,8 @@ const ChangeCode_postal=(event) =>{
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="examplePoste_occupé" >
-                      Poste Occupé
-                      </label>
-                     <input
+                    <label htmlFor="examplePoste_occupé">Poste Occupé</label>
+                    <input
                       name="Poste_occupé"
                       id="examplePoste_occupé"
                       placeholder=""
@@ -151,10 +143,8 @@ const ChangeCode_postal=(event) =>{
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleSite_Web" >
-                      Site Web
-                      </label>
-                     <input
+                    <label htmlFor="exampleSite_Web">Site Web</label>
+                    <input
                       name="Site_Web"
                       id="exampleSite_Web"
                       placeholder="Site Web"
@@ -166,10 +156,8 @@ const ChangeCode_postal=(event) =>{
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleTel" >
-                      Tel
-                      </label>
-                     <input
+                    <label htmlFor="exampleTel">Tel</label>
+                    <input
                       name="tele"
                       id="exampleTel"
                       placeholder="tel"
@@ -180,56 +168,67 @@ const ChangeCode_postal=(event) =>{
                   </div>
                 </div>
                 <div className="col-md-6">
-                   <div className="position-relative form-group">
-                     <label htmlFor="exampleAddress2" >Address
-                     </label>
-                     <input name="address" 
-                     id="exampleAddress" 
-                     placeholder="Apartment, studio ,or floor"
-                     type="text"
-                      className="form-control" 
-                      onChange={(event) => ChangeAdress(event)}/>
+                  <div className="position-relative form-group">
+                    <label htmlFor="exampleAddress2">Address</label>
+                    <input
+                      name="address"
+                      id="exampleAddress"
+                      placeholder="Apartment, studio ,or floor"
+                      type="text"
+                      className="form-control"
+                      onChange={(event) => ChangeAdress(event)}
+                    />
                   </div>
                 </div>
-            
+
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleCity" >City</label>
-                    <input name="city" id="exampleCity"
-                     type="text" 
-                    className="form-control"
-                    onChange={(event) => ChangeCity(event)}/> 
-                   </div>
-                </div>
-                   <div className="col-md-6">
-                    <div className="position-relative form-group">
-                      <label htmlFor="exampleState" >State
-                      </label>
-                     <input name="state"
-                     id="exampleState" 
-                     type="text" className="form-control" 
-                     onChange={(event) => ChangeState(event)}/>
-                    </div>
+                    <label htmlFor="exampleCity">City</label>
+                    <input
+                      name="city"
+                      id="exampleCity"
+                      type="text"
+                      className="form-control"
+                      onChange={(event) => ChangeCity(event)}
+                    />
                   </div>
+                </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleZip" >code postal
-                   </label><input name="zip" id="exampleZip"
-                   type="text" className="form-control" 
-                   onChange={(event) => ChangeCode_postal(event)}/></div>
-                   </div>
-               </div>
-                 <button
-                       type="button"
+                    <label htmlFor="exampleState">State</label>
+                    <input
+                      name="state"
+                      id="exampleState"
+                      type="text"
+                      className="form-control"
+                      onChange={(event) => ChangeState(event)}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="position-relative form-group">
+                    <label htmlFor="exampleZip">code postal</label>
+                    <input
+                      name="zip"
+                      id="exampleZip"
+                      type="text"
+                      className="form-control"
+                      onChange={(event) => ChangeCode_postal(event)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                type="button"
                 onClick={HandleSubmit}
-                className="mt-2 btn btn-primary">
+                className="mt-2 btn btn-primary"
+              >
                 Ajouter
-                 </button>
-              
+              </button>
             </form>
-         </div>
-       </div>
-       </div>
+          </div>
+        </div>
+      </div>
     </Fragment>
   );
 }

@@ -1,64 +1,83 @@
+import React, { useEffect, useState } from "react";
+import Banner from "../Banner";
+import axios from "axios";
 
-import React from 'react'
 export default function Display_fourniseur() {
-  const data = [
-    {
-      nom: "",
-      prenom: "",
-      email: "",
-      tel: "",
-      adress: "",
-      ville: "",
-      etat: "",
-      code_postal: "",
-      poste: "",
-      site_web: "",
-    },
-  ]
+  const [Fournisseur, setFournisseur] = useState([]);
+
+  useEffect(() => {
+    getAllFournisseur();
+  }, []);
+
+  const getAllFournisseur = () => {
+    axios
+      .get("http://localhost:3200/api/get_fournisseur")
+      .then((result) => {
+        setFournisseur(result.data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const DeleteFournisseur = (id) => {
+    axios
+      .delete("http://localhost:3200/api/delete_fournisseur/" + id)
+      .then((result) => {
+        console.log("here", result.data.message);
+        getAllFournisseur();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
-    <div>
-      <  div className="row">
-        <div className="col-lg-6">
+    <div className="app-main__inner">
+      <Banner title="Mes Fournisseur" icon="pe-7s-users" />
+      <div className="row">
+        <div className="col-12">
           <div className="main-card mb-3 card">
-            <div className="card-body" >
-              <div className="page-title-icon">
-                <i className="utilisateurs pe-7s"> </i>
-              </div>
-              <h5 className="card-title">Simple table</h5>
+            <div className="card-body">
+              <h5 className="card-title"> table Fournisseur</h5>
               <table className="mb-0 table">
                 <thead>
                   <tr>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Prénom</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">poste occupé</th>
-                    <th scope="col">site web</th>
-
-                    <th scope='col'>Tel</th>
-                    <th scope='col'>Address</th>
-                    <th scope='col'>Ville</th>
-                    <th scope='col'>Etat</th>
-                    <th scope='col'>Code Postal</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Email</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((data, i) => (
+                  {Fournisseur.map((value, i) => (
                     <tr key={i}>
-                      <th>{data.nom}</th>
-                      <td>{data.prenom}</td>
-                      <td>{data.email}</td>
-                      <td>{data.poste}</td>
-                      <td>{data.site_web}</td>
-                      <td>{data.tel}</td>
-                      <td>{data.adress}</td>
-                      <td>{data.ville}</td>
-                      <td>{data.etat}</td>
-                      <td>{data.code_postal}</td>
+                      <td>{value.nom}</td>
+                      <td>{value.prenom}</td>
+                      <td>{value.email}</td>
+                      <td>
+                        <button className="mb-2 mr-2 btn-transition btn btn-outline-info">
+                          <i className="pe-7s-pen" style={{ fontSize: 18 }}></i>
+                        </button>
+                        <button
+                          className="mb-2 mr-2 btn-transition btn btn-outline-danger"
+                          onClick={() => DeleteFournisseur(value._id)}
+                        >
+                          <i
+                            className="pe-7s-trash"
+                            style={{ fontSize: 18 }}
+                          ></i>
+                        </button>
 
+                        <button className="mb-2 mr-2 btn-transition btn btn-outline-success">
+                          <i
+                            className="pe-7s-look "
+                            style={{ fontSize: 18 }}
+                          ></i>
+                        </button>
+                      </td>
                     </tr>
                   ))}
-
-
                 </tbody>
               </table>
             </div>
@@ -66,6 +85,5 @@ export default function Display_fourniseur() {
         </div>
       </div>
     </div>
-
   );
 }
