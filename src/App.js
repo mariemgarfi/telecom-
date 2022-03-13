@@ -1,5 +1,6 @@
 import "./App.css";
 import Add_fournisseur from "./Component/Admin/Add_fournisseur";
+import Display_fourniseur from "./Component/Admin/Display_fournisseur";
 import NavBar from "./Component/NavBar";
 import SideBar from "./Component/SideBar";
 
@@ -11,7 +12,8 @@ function App() {
       <div className="app-main">
         <SideBar />
         <div className="app-main__outer">
-          <Add_fournisseur/>
+          {/* <Add_fournisseur/> */}
+          <Display_fourniseur/>
           </div>
       </div>
     </div>
