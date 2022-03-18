@@ -13,7 +13,7 @@ router.post("/ajouter_fournisseur", (req, res) => {
     site_web: req.body.site_web,
     tel: req.body.tel,
     adress: req.body.adress,
-    city: req.body.city,
+    ville: req.body.ville,
     state: req.body.state,
     code_postal: req.body.code_postal,
   });

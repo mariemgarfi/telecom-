@@ -8,7 +8,7 @@ const FournisseurSchema = mongoose.Schema({
   site_web: { type: String },
   tel: { type: Number },
   adress: { type: String },
-  city: { type: String },
+  ville: { type: String },
   state: { type: String },
   code_postal: { type: String },
 
