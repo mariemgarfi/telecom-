@@ -8,9 +8,9 @@ export default function Add_fournisseur() {
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState();
   const [adress, setAdress] = useState("");
-  const [city, setCity] = useState("");
+  const [ville, setVille] = useState("");
   const [state, setState] = useState("");
-  const [code_postal, setCode_postal] = useState("");
+  const [code_postal, setcode_postal] = useState("");
   const [poste_occupe, setPoste_occupé] = useState("");
   const [Site_Web, setSite_Web] = useState("");
 
@@ -36,14 +36,14 @@ export default function Add_fournisseur() {
   const ChangeAdress = (event) => {
     setAdress(event.target.value);
   };
-  const ChangeCity = (event) => {
-    setCity(event.target.value);
+  const ChangeVille = (event) => {
+    setVille(event.target.value);
   };
   const ChangeState = (event) => {
     setState(event.target.value);
   };
   const ChangeCode_postal = (event) => {
-    setCode_postal(event.target.value);
+    setcode_postal(event.target.value);
   };
 
   const HandleSubmit = () => {
@@ -55,9 +55,9 @@ export default function Add_fournisseur() {
       site_web: Site_Web,
       tel: tel,
       adress: adress,
-      city: city,
+      ville: ville,
       state: state,
-      code_postal: code_postal,
+     code_postal:code_postal,
     };
     console.log("here response", data);
 
@@ -134,7 +134,7 @@ export default function Add_fournisseur() {
                     <input
                       name="Poste_occupé"
                       id="examplePoste_occupé"
-                      placeholder=""
+                      placeholder="Poste Occupé"
                       type="text"
                       className="form-control"
                       onChange={(event) => ChangePoste_occupé(event)}
@@ -147,7 +147,7 @@ export default function Add_fournisseur() {
                     <input
                       name="Site_Web"
                       id="exampleSite_Web"
-                      placeholder="Site Web"
+                      placeholder="'http:/Sitewep.com'"
                       type="text"
                       className="form-control"
                       onChange={(event) => ChangeSite_Web(event)}
@@ -183,13 +183,14 @@ export default function Add_fournisseur() {
 
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleCity">City</label>
+                    <label htmlFor="exampleVille">ville</label>
                     <input
-                      name="city"
-                      id="exampleCity"
+                      name="ville"
+                      id="exampleille"
+                      placeholder="ville"
                       type="text"
                       className="form-control"
-                      onChange={(event) => ChangeCity(event)}
+                      onChange={(event) => ChangeVille(event)}
                     />
                   </div>
                 </div>
@@ -207,11 +208,12 @@ export default function Add_fournisseur() {
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleZip">code postal</label>
+                    <label htmlFor="examplecode_postal">code postal</label>
                     <input
-                      name="zip"
-                      id="exampleZip"
-                      type="text"
+                      name="code_postal"
+                      id="examplecode_postal"
+                      placeholder="1234"
+                      type="number"
                       className="form-control"
                       onChange={(event) => ChangeCode_postal(event)}
                     />
