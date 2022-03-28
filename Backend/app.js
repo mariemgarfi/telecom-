@@ -13,9 +13,10 @@ mongoose.connect('mongodb://localhost:27017/telecomDB', { useNewUrlParser: true,
 
 var FournisseurRouter = require("./Routes/Fournisseur");
 var ProductsRouter= require("./Routes/Products");
-var MagasinierRouter = require("./Routes/Magasinier");
+var UserRouter=require("./Routes/User");
 var CategorieRouter=require("./Routes/Categorie");
 
+var CommandeRouter=require("./Routes/Commande");
 
 const app = express()
 app.use(bodyParser.json());
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 
 app.use("/api", FournisseurRouter);
 app.use("/api", ProductsRouter);
-app.use ("/api", MagasinierRouter);
-app.use("/api",CategorieRouter)
+app.use ("/api", UserRouter);
+app.use("/api",CategorieRouter);
+app.use("/api",CommandeRouter)
 module.exports=app

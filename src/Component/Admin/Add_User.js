@@ -60,7 +60,7 @@ export default function Add_magasinier() {
   return (
    <Fragment>
     <div className="app-main__inner">
-      <Banner title="Ajouter Fournisseur" icon="pe-7s-add-user"/>
+      <Banner title="Ajouter Utilisateur " icon="pe-7s-add-user"/>
       <div className="main-card mb-3 card">
         <div className="card-body">
           <h1 className="card-title">Remplir le formulaire</h1>

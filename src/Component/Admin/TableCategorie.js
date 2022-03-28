@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Banner from "../Banner";
 import axios from "axios";
+import Modal_delete from "./Modal_delete";
 
 export default function TableCategorie() {
-    const [Categorie, setCategorie] = useState([]);
 
+    const [Categorie, setCategorie] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [CategorieSelected, setCategorieSelected] = useState({});
+
+    const handleClickOpen = (categorie) => {
+        setCategorieSelected(categorie)
+        setOpen(true);
+      };
+      const handleClose = () => {
+        setOpen(false);
+        getAllCategorie();
+      };
     useEffect(() => {
         getAllCategorie();
     }, []);
@@ -20,17 +32,6 @@ export default function TableCategorie() {
             });
     };
 
-    const DeleteCategorie = (id) => {
-        axios
-            .delete("http://localhost:3200/api/delete_Categorie/" + id)
-            .then((result) => {
-                console.log("here", result.data.message);
-                getAllCategorie();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
 
     return (
         <div className="app-main__inner">
@@ -59,7 +60,7 @@ export default function TableCategorie() {
                                                 </button>
                                                 <button
                                                     className="mb-2 mr-2 btn-transition btn btn-outline-danger"
-                                                    onClick={() => DeleteCategorie(value._id)}
+                                                    onClick={() => handleClickOpen(value)}
                                                 >
                                                     <i
                                                         className="pe-7s-trash"
@@ -78,6 +79,7 @@ export default function TableCategorie() {
                                     ))}
                                 </tbody>
                             </table>
+                            {open? <Modal_delete categorie={CategorieSelected} open={open}  onClose={handleClose}/> :null}
                         </div>
                     </div>
                 </div>

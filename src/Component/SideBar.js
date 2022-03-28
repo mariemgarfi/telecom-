@@ -49,10 +49,10 @@ export default function SideBar() {
           <ul className="vertical-nav-menu">
             <li className="app-sidebar__heading">Dashboards</li>
             <li>
-              <a href="index.html" className="mm-active">
+              <Link to="index.html" className="mm-active">
                 <i className="metismenu-icon pe-7s-rocket" />
                 Dashboard Example 1
-              </a>
+              </Link>
             </li>
             <li>
               <Link to="/Add_commande" >
@@ -62,167 +62,85 @@ export default function SideBar() {
             </li>
             <li className="app-sidebar__heading">UI Components</li>
             <li>
-              <a href="#">
+              <Link to="#">
                 <i className="metismenu-icon pe-7s-diamond" />
-                Elements
+              Produits
                 <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
-              </a>
+              </Link>
               <ul>
                 <li>
-                  <a href="elements-buttons-standard.html">
+                  <Link to="/">
                     <i className="metismenu-icon" />
-                    Buttons
-                  </a>
+                   Ajouter Produits
+                  </Link>
                 </li>
                 <li>
-                  <a href="elements-dropdowns.html">
-                    <i className="metismenu-icon"> </i>Dropdowns
-                  </a>
+                  <Link to="Tableproducts">
+                    <i className="metismenu-icon"> </i>Tableau de Produit
+                  </Link>
                 </li>
                 <li>
-                  <a href="elements-icons.html">
-                    <i className="metismenu-icon"> </i>Icons
-                  </a>
+                  <Link to="Add_Categorie">
+                    <i className="metismenu-icon" />
+                   Ajouter Categorie
+                  </Link>
                 </li>
                 <li>
-                  <a href="elements-badges-labels.html">
-                    <i className="metismenu-icon"> </i>Badges
-                  </a>
-                </li>
-                <li>
-                  <a href="elements-cards.html">
-                    <i className="metismenu-icon"> </i>Cards
-                  </a>
-                </li>
-                <li>
-                  <a href="elements-list-group.html">
-                    <i className="metismenu-icon"> </i>List Groups
-                  </a>
-                </li>
-                <li>
-                  <a href="elements-navigation.html">
-                    <i className="metismenu-icon"> </i>Navigation Menus
-                  </a>
-                </li>
-                <li>
-                  <a href="elements-utilities.html">
-                    <i className="metismenu-icon"> </i>Utilities
-                  </a>
+                  <Link to="TableCategorie">
+                    <i className="metismenu-icon" />
+                Tableau de Categorie
+                  </Link>
                 </li>
               </ul>
             </li>
             <li>
-              <a href="#">
+              <Link to="#">
                 <i className="metismenu-icon pe-7s-car" />
-                Components
+                Fournisseu
                 <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
-              </a>
+              </Link>
               <ul>
                 <li>
-                  <a href="components-tabs.html">
-                    <i className="metismenu-icon"> </i>Tabs
-                  </a>
+                  <Link to="/Add_fournisseur">
+                    <i className="metismenu-icon"> </i>Ajouter Fournisseur
+                  </Link>
                 </li>
                 <li>
-                  <a href="components-accordions.html">
-                    <i className="metismenu-icon"> </i>Accordions
-                  </a>
+                  <Link to="Display_fourniseur">
+                    <i className="metismenu-icon"> </i>Modifier Fournisseur
+                  </Link>
                 </li>
                 <li>
-                  <a href="components-notifications.html">
-                    <i className="metismenu-icon"> </i>Notifications
-                  </a>
-                </li>
-                <li>
-                  <a href="components-modals.html">
-                    <i className="metismenu-icon"> </i>Modals
-                  </a>
-                </li>
-                <li>
-                  <a href="components-progress-bar.html">
-                    <i className="metismenu-icon"> </i>Progress Bar
-                  </a>
-                </li>
-                <li>
-                  <a href="components-tooltips-popovers.html">
-                    <i className="metismenu-icon"> </i>Tooltips &amp; Popovers
-                  </a>
-                </li>
-                <li>
-                  <a href="components-carousel.html">
-                    <i className="metismenu-icon"> </i>Carousel
-                  </a>
-                </li>
-                <li>
-                  <a href="components-calendar.html">
-                    <i className="metismenu-icon"> </i>Calendar
-                  </a>
-                </li>
-                <li>
-                  <a href="components-pagination.html">
-                    <i className="metismenu-icon"> </i>Pagination
-                  </a>
-                </li>
-                <li>
-                  <a href="components-scrollable-elements.html">
-                    <i className="metismenu-icon"> </i>Scrollable
-                  </a>
-                </li>
-                <li>
-                  <a href="components-maps.html">
-                    <i className="metismenu-icon"> </i>Maps
-                  </a>
+                  <Link to="Add_commande">
+                    <i className="metismenu-icon"> </i>
+                    Ajouter Commande
+                  </Link>
                 </li>
               </ul>
+          
             </li>
             <li>
-              <a href="tables-regular.html">
+              <Link to="#">
+                <i className="metismenu-icon pe-7s-car" />
+               Utilisater
+                <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
+              </Link>
+              <ul>
+               <li>
+              <Link to="Add_User">
                 <i className="metismenu-icon pe-7s-display2" />
-                Tables
-              </a>
-            </li>
-            <li className="app-sidebar__heading">Widgets</li>
-            <li>
-              <a href="dashboard-boxes.html">
+                Ajouter Utilisater 
+              </Link>
+                </li>
+                <li>
+                <Link to="tableUser">
                 <i className="metismenu-icon pe-7s-display2" />
-                Dashboard Boxes
-              </a>
+              Tableau d'Utilisater
+               </Link>
+               </li>
+            </ul>
             </li>
-            <li className="app-sidebar__heading">Forms</li>
-            <li>
-              <a href="forms-controls.html">
-                <i className="metismenu-icon pe-7s-mouse"> </i>Forms Controls
-              </a>
-            </li>
-            <li>
-              <a href="forms-layouts.html">
-                <i className="metismenu-icon pe-7s-eyedropper"> </i>Forms
-                Layouts
-              </a>
-            </li>
-            <li>
-              <a href="forms-validation.html">
-                <i className="metismenu-icon pe-7s-pendrive"> </i>Forms
-                Validation
-              </a>
-            </li>
-            <li className="app-sidebar__heading">Charts</li>
-            <li>
-              <a href="charts-chartjs.html">
-                <i className="metismenu-icon pe-7s-graph2"> </i>ChartJS
-              </a>
-            </li>
-            <li className="app-sidebar__heading">PRO Version</li>
-            <li>
-              <a
-                href="https://dashboardpack.com/theme-details/architectui-dashboard-html-pro/"
-                target="_blank"
-              >
-                <i className="metismenu-icon pe-7s-graph2"> </i>
-                Upgrade to PRO
-              </a>
-            </li>
-          </ul>
+           </ul>
         </div>
       </div>
     </div>

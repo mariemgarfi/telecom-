@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const MagasinierSchema = mongoose.Schema({
+const UserSchema = mongoose.Schema({
   NomUtilisateur: { type: String },
   PrenomUtilisateur: { type: String },
   Email: { type: String },
@@ -9,5 +9,5 @@ const MagasinierSchema = mongoose.Schema({
   Ville: { type: String },
 });
 
-const Magasinier = mongoose.model("Magasinier", MagasinierSchema);
-module.exports = Magasinier;
+const User= mongoose.model("User", UserSchema);
+module.exports = User;

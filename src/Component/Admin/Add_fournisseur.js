@@ -60,7 +60,7 @@ export default function Add_fournisseur() {
      code_postal:code_postal,
     };
     console.log("here response", data);
-
+   
     axios
       .post("http://localhost:3200/api/ajouter_fournisseur", data)
       .then((response) => {
@@ -69,7 +69,8 @@ export default function Add_fournisseur() {
       .catch((error) => {
         console.log(error);
       });
-  };
+   
+    }
   return (
     <Fragment>
       <div className="app-main__inner">
