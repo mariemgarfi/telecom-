@@ -10,9 +10,6 @@ import NavBar from "./Component/NavBar";
 import SideBar from "./Component/SideBar";
 import Add_Categorie from "./Component/Admin/Add_Categorie";
 import TableCategorie from "./Component/Admin/TableCategorie";
-import Add_User from "./Component/Admin/Add_User";
-import TableUser from "./Component/Admin/TableUser";
-
 
 function App() {
   return (
@@ -20,6 +17,7 @@ function App() {
       <NavBar />
 
       <div className="app-main">
+
 
 
         <BrowserRouter>

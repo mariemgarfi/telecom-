@@ -54,6 +54,12 @@ export default function SideBar() {
                 Dashboard Example 1
               </Link>
             </li>
+            <li>
+              <Link to="/Add_commande" >
+                <i className="metismenu-icon pe-7s-rocket" />
+                Ajouter commande
+              </Link>
+            </li>
             <li className="app-sidebar__heading">UI Components</li>
             <li>
               <Link to="#">

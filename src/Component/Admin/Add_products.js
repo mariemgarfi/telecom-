@@ -1,26 +1,28 @@
+
 import axios from 'axios';
 import React, { useState, Fragment, useEffect } from 'react'
 import Banner from '../Banner';
 
 export default function Add_products() {
-
   const [categorie_article, setCategorie_article] = useState("");
   const [reference, setReference] = useState("");
   const [lieu_stokage, setLieu_stokage] = useState("");
   const [Code, setCode] = useState("");
   const [type, settype] = useState("");
+
   
   const [categorie, setCategorie] = useState([]);
 
   const ChangeCategorie = (event) => {
     setCategorie_article(event.target.value);
+    console.log(event.target.value);
   };
 
   const ChangeCode = (event) => {
-    setCode(event.target.value)
+    setCode(event.target.value);
   };
   const Changetype_articl = (event) => {
-    settype(event.target.value)
+    settype(event.target.value);
   };
   const ChangeReference = (event) => {
     setReference(event.target.value);
@@ -35,14 +37,12 @@ export default function Add_products() {
 
   const HandleSubmit = () => {
     let data = {
-
       categorie_article: categorie_article,
       lieu_stokagee: lieu_stokage,
       reference: reference,
       Code: Code,
       type: type,
 
-    }
     console.log("here response", data);
 
  
@@ -54,16 +54,8 @@ export default function Add_products() {
       .catch((error) => {
         console.log(error);
       });
-  }
-  const getAllCategorie=()=>{ axios
-    .get("http://localhost:3200/api/get_Categorie")
-    .then((result) => {
-      setCategorie(result.data.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
+
+
   return (
     <Fragment>
       <div className="app-main__inner">
@@ -75,6 +67,7 @@ export default function Add_products() {
               <div className="form-row">
                  <div className="col-md-6">
                   <div className="position-relative form-group">
+
                     <label htmlFor="examplePassword11">Categorie Article</label>
                     <select 
                       name="categorie"
@@ -111,7 +104,8 @@ export default function Add_products() {
                       type="text"
                       className="form-control"
                       onChange={(event) => Changetype_articl(event)}
-                    /></div>
+                    />
+                  </div>
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
@@ -139,7 +133,6 @@ export default function Add_products() {
                     />
                   </div>
                 </div>
-
               </div>
               <button
                 type="button"
