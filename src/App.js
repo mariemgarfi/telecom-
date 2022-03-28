@@ -12,6 +12,7 @@ import Add_Categorie from "./Component/Admin/Add_Categorie";
 import TableCategorie from "./Component/Admin/TableCategorie";
 import Add_User from "./Component/Admin/Add_User";
 import TableUser from "./Component/Admin/TableUser";
+import Edit_User from "./Component/Admin/Edit_User";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
               />
               <Route path="/Add_commande" element={<Add_commande />} />
               <Route path="/Add_user" element={<Add_User />} />
+              <Route path="/Edit_user/:id" element={<Edit_User />} />
               <Route path="/tableUser" element={<TableUser />} />
             </Routes>
           </div>

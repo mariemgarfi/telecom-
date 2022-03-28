@@ -1,9 +1,9 @@
-import axios from "axios";
-import React, { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
 import Banner from "../Banner";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function Add_magasinier() {
+export default function Edit_User() {
   const [NomUtilisateur, setNomUtilisateur] = useState("");
   const [PrenomUtilisateur, setPrenomUtilisateur] = useState("");
   const [Email, setEmail] = useState("");
@@ -11,7 +11,32 @@ export default function Add_magasinier() {
   const [Address, setAddress] = useState("");
   const [Ville, setVille] = useState("");
   const [Poste, setPoste] = useState("");
+
+  const [ahlem, setAhlem] = useState("");
+  let param = useParams();
   let navigate=useNavigate()
+
+  useEffect(() => {
+    getUserById();
+  }, []);
+
+  const getUserById = () => {
+    axios
+      .get("http://localhost:3200/api/get_user_byId/" + param.id)
+      .then((result) => {
+        let data = result.data.user;
+        setNomUtilisateur(data.NomUtilisateur);
+        setPrenomUtilisateur(data.PrenomUtilisateur);
+        setEmail(data.Email);
+        setTele(data.Tele);
+        setAddress(data.Address);
+        setVille(data.Ville);
+        setPoste(data.Poste);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const ChangeNomUtilisateur = (event) => {
     setNomUtilisateur(event.target.value);
@@ -35,8 +60,10 @@ export default function Add_magasinier() {
   const ChangeVille = (event) => {
     setVille(event.target.value);
   };
+
   const HandleSubmit = () => {
     let data = {
+      _id: param.id,
       NomUtilisateur: NomUtilisateur,
       PrenomUtilisateur: PrenomUtilisateur,
       Email: Email,
@@ -45,14 +72,13 @@ export default function Add_magasinier() {
       Address: Address,
       Ville: Ville,
     };
-    console.log("here response", data);
+    console.log(data);
 
     axios
-      .post("http://localhost:3200/api/ajouter_Utilisateur", data)
+      .put("http://localhost:3200/api/Update_Utilisateur", data)
       .then((response) => {
         console.log("here response", response.data.message);
         navigate("/tableUser")
-
       })
       .catch((error) => {
         console.log(error);
@@ -61,7 +87,7 @@ export default function Add_magasinier() {
   return (
     <Fragment>
       <div className="app-main__inner">
-        <Banner title="Ajouter Utilisateur " icon="pe-7s-add-user" />
+        <Banner title="Modifier Utilisateur " icon="pe-7s-add-user" />
         <div className="main-card mb-3 card">
           <div className="card-body">
             <h1 className="card-title">Remplir le formulaire</h1>
@@ -77,6 +103,7 @@ export default function Add_magasinier() {
                       type="text"
                       className="form-control"
                       onChange={(event) => ChangeNomUtilisateur(event)}
+                      value={NomUtilisateur || ""}
                     />
                   </div>
                 </div>
@@ -90,6 +117,7 @@ export default function Add_magasinier() {
                       type="text"
                       className="form-control"
                       onChange={(event) => ChangePrenomUtilisateur(event)}
+                      value={PrenomUtilisateur || ""}
                     />
                   </div>
                 </div>
@@ -103,6 +131,7 @@ export default function Add_magasinier() {
                       type="Email"
                       className="form-control"
                       onChange={(event) => ChangeEmail(event)}
+                      value={Email || ""}
                     />
                   </div>
                 </div>
@@ -116,6 +145,7 @@ export default function Add_magasinier() {
                       type="text"
                       className="form-control"
                       onChange={(event) => ChangePoste(event)}
+                      value={Poste || ""}
                     />
                   </div>
                 </div>
@@ -129,6 +159,7 @@ export default function Add_magasinier() {
                       type="number"
                       className="form-control"
                       onChange={(event) => ChangeTele(event)}
+                      value={Tele || ""}
                     />
                   </div>
                 </div>
@@ -142,6 +173,7 @@ export default function Add_magasinier() {
                       type="text"
                       className="form-control"
                       onChange={(event) => ChangeAddress(event)}
+                      value={Address || ""}
                     />
                   </div>
                 </div>
@@ -155,6 +187,7 @@ export default function Add_magasinier() {
                       type="text"
                       className="form-control"
                       onChange={(event) => ChangeVille(event)}
+                      value={Ville || ""}
                     />
                   </div>
                 </div>

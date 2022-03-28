@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import Banner from "../Banner";
 import axios from "axios";
 import Modal_delete from "./Modal_delete";
+import { useNavigate } from "react-router-dom";
 
 export default function TableUser() {
   const [User, setUser] = useState([]);
   const [open, setOpen] = useState(false);
   const [userSelected, setUserSelected] = useState({});
+  let navigate = useNavigate();
 
   useEffect(() => {
     getAllUser();
@@ -34,7 +36,7 @@ export default function TableUser() {
 
   return (
     <div className="app-main__inner">
-      <Banner title="Mes Produits" icon="fa-shopping-cart" />
+      <Banner title="Mes Users" icon="fa-shopping-cart" />
       <div className="row">
         <div className="col-12">
           <div className="main-card mb-3 card">
@@ -61,7 +63,10 @@ export default function TableUser() {
                       <td>{value.Tele}</td>
 
                       <td>
-                        <button className="mb-2 mr-2 btn-transition btn btn-outline-info">
+                        <button
+                          className="mb-2 mr-2 btn-transition btn btn-outline-info"
+                          onClick={() => navigate("/Edit_user/" + value._id)}
+                        >
                           <i className="pe-7s-pen" style={{ fontSize: 18 }}></i>
                         </button>
                         <button
@@ -87,9 +92,10 @@ export default function TableUser() {
               </table>
               {open ? (
                 <Modal_delete
-                  user={userSelected}
+                  data={userSelected}
                   open={open}
                   onClose={handleClose}
+                  type="User"
                 />
               ) : null}
             </div>

@@ -1,12 +1,9 @@
-import axios from 'axios';
-import React, { useState, Fragment } from 'react'
-import Banner from '../Banner';
+import axios from "axios";
+import React, { useState, Fragment } from "react";
+import Banner from "../Banner";
 
 export default function Add_Categorie() {
-
   const [Categorie, setCategorie] = useState("");
-
-
 
   const ChangeCategorie = (event) => {
     setCategorie(event.target.value);
@@ -14,11 +11,9 @@ export default function Add_Categorie() {
 
   const HandleSubmit = () => {
     let data = {
-
-     Categorie:Categorie,
+      Categorie: Categorie,
     };
-    console.log("here response", data);
-axios
+    axios
       .post("http://localhost:3200/api/ajouter_Categorie", data)
       .then((response) => {
         console.log("here response", response.data.message);
@@ -26,7 +21,7 @@ axios
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
   return (
     <Fragment>
       <div className="app-main__inner">

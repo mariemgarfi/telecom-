@@ -85,7 +85,7 @@ export default function Display_fourniseur() {
                   ))}
                 </tbody>
               </table>
-              {open? <Modal_delete  fournisseur={FournisseurSelected} open={open}  onClose={handleClose}/> :null}
+              {open? <Modal_delete type="Fournisseur"  data={FournisseurSelected} open={open}  onClose={handleClose}/> :null}
             </div>
           </div>
         </div>

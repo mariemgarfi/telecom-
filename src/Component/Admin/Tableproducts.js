@@ -7,15 +7,15 @@ export default function Tableproducts() {
   const [Products, setProducts] = useState([]);
   const [open, setOpen] = useState(false);
   const [ProductsSelected, setProductsSelected] = useState({});
- 
+
   const handleClickOpen = (products) => {
-      setProductsSelected(products)
-      setOpen(true);
-    };
-    const handleClose = () => {
-      setOpen(false);
-      getAllProducts();
-    };
+    setProductsSelected(products);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    getAllProducts();
+  };
 
   useEffect(() => {
     getAllProducts();
@@ -32,8 +32,6 @@ export default function Tableproducts() {
       });
   };
 
- 
-
   return (
     <div className="app-main__inner">
       <Banner title="Mes Produits" icon="fa-shopping-cart" />
@@ -41,11 +39,10 @@ export default function Tableproducts() {
         <div className="col-12">
           <div className="main-card mb-3 card">
             <div className="card-body">
-              <h5 className="card-title"> table  des Produit</h5>
+              <h5 className="card-title"> table des Produit</h5>
               <table className="mb-0 table">
                 <thead>
                   <tr>
-
                     <th>categorie article</th>
                     <th>code</th>
                     <th>type</th>
@@ -83,7 +80,14 @@ export default function Tableproducts() {
                   ))}
                 </tbody>
               </table>
-              {open? <Modal_delete products={ProductsSelected} open={open}  onClose={handleClose}/> :null}
+              {open ? (
+                <Modal_delete
+                  data={ProductsSelected}
+                  open={open}
+                  onClose={handleClose}
+                  type="Produit"
+                />
+              ) : null}
             </div>
           </div>
         </div>
