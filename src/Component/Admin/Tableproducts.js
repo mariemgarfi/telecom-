@@ -53,7 +53,7 @@ export default function Tableproducts() {
                   </tr>
                 </thead>
                 <tbody>
-                  {Products.map((value, i) => (
+                  {Products?.map((value, i) => (
                     <tr key={i}>
                       <td>{value.categorie}</td>
                       <td>{value.Code_article}</td>
