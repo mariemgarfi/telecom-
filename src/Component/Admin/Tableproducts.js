@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from "react";
+import Modal_delete from "./Modal_delete";
 import Banner from "../Banner";
 import axios from "axios";
 
 export default function Tableproducts() {
   const [Products, setProducts] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [ProductsSelected, setProductsSelected] = useState({});
+ 
+  const handleClickOpen = (products) => {
+      setProductsSelected(products)
+      setOpen(true);
+    };
+    const handleClose = () => {
+      setOpen(false);
+      getAllProducts();
+    };
 
   useEffect(() => {
     getAllProducts();
@@ -20,17 +32,7 @@ export default function Tableproducts() {
       });
   };
 
-  const DeleteProducts = (id) => {
-    axios
-      .delete("http://localhost:3200/api/delete_Products/" + id)
-      .then((result) => {
-        console.log("here", result.data.message);
-        getAllProducts();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+ 
 
   return (
     <div className="app-main__inner">
@@ -62,7 +64,7 @@ export default function Tableproducts() {
                         </button>
                         <button
                           className="mb-2 mr-2 btn-transition btn btn-outline-danger"
-                          onClick={() => DeleteProducts(value._id)}
+                          onClick={() => handleClickOpen(value)}
                         >
                           <i
                             className="pe-7s-trash"
@@ -81,6 +83,7 @@ export default function Tableproducts() {
                   ))}
                 </tbody>
               </table>
+              {open? <Modal_delete products={ProductsSelected} open={open}  onClose={handleClose}/> :null}
             </div>
           </div>
         </div>

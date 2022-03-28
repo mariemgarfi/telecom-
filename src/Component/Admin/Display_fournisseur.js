@@ -1,9 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Banner from "../Banner";
 import axios from "axios";
+import Modal_delete from "./Modal_delete";
 
 export default function Display_fourniseur() {
-  const [Fournisseur, setFournisseur] = useState([]);
+  const [fournisseur, setFournisseur] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [FournisseurSelected, setFournisseurSelected] = useState({});
+
+    useEffect(() => {
+        getAllFournisseur();
+    }, []);
+    
+  const handleClickOpen = (fournisseur) => {
+    setFournisseurSelected(fournisseur)
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    getAllFournisseur();
+  };
 
   useEffect(() => {
     getAllFournisseur();
@@ -20,21 +36,10 @@ export default function Display_fourniseur() {
       });
   };
 
-  const DeleteFournisseur = (id) => {
-    axios
-      .delete("http://localhost:3200/api/delete_fournisseur/" + id)
-      .then((result) => {
-        console.log("here", result.data.message);
-        getAllFournisseur();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   return (
     <div className="app-main__inner">
-      <Banner title="Mes Fournisseur" icon="pe-7s-users" />
+      <Banner title="Mes Fournisseur" icon="pe-7s-Fournisseurs" />
       <div className="row">
         <div className="col-12">
           <div className="main-card mb-3 card">
@@ -50,7 +55,7 @@ export default function Display_fourniseur() {
                   </tr>
                 </thead>
                 <tbody>
-                  {Fournisseur.map((value, i) => (
+                  {fournisseur.map((value, i) => (
                     <tr key={i}>
                       <td>{value.nom}</td>
                       <td>{value.prenom}</td>
@@ -61,7 +66,7 @@ export default function Display_fourniseur() {
                         </button>
                         <button
                           className="mb-2 mr-2 btn-transition btn btn-outline-danger"
-                          onClick={() => DeleteFournisseur(value._id)}
+                          onClick={() => handleClickOpen(value)}
                         >
                           <i
                             className="pe-7s-trash"
@@ -80,6 +85,7 @@ export default function Display_fourniseur() {
                   ))}
                 </tbody>
               </table>
+              {open? <Modal_delete  fournisseur={FournisseurSelected} open={open}  onClose={handleClose}/> :null}
             </div>
           </div>
         </div>
