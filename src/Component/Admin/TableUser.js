@@ -1,36 +1,38 @@
 import React, { useEffect, useState } from "react";
 import Banner from "../Banner";
 import axios from "axios";
+import Modal_delete from "./Modal_delete";
 
-export default function TableMagasinier() {
-    const [Magasinier, setMagasinier] = useState([]);
+export default function TableUser() {
+    const [User, setUser] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [userSelected, setUserSelected] = useState({});
 
     useEffect(() => {
-        getAllMagasinier();
+        getAllUser();
     }, []);
+    
+  const handleClickOpen = (user) => {
+    setUserSelected(user)
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+    getAllUser();
+  };
 
-    const getAllMagasinier = () => {
+    const getAllUser = () => {
         axios
-            .get("http://localhost:3200/api/get_Magasinier ")
+            .get("http://localhost:3200/api/get_user ")
             .then((result) => {
-                setMagasinier(result.data.data);
+                setUser(result.data.data);
             })
             .catch((error) => {
                 console.log(error);
             });
     };
 
-    const DeleteMagasinier = (id) => {
-        axios
-            .delete("http://localhost:3200/api/delete_Magasinier /" + id)
-            .then((result) => {
-                console.log("here", result.data.message);
-                getAllMagasinier();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
+
 
     return (
         <div className="app-main__inner">
@@ -39,7 +41,7 @@ export default function TableMagasinier() {
                 <div className="col-12">
                     <div className="main-card mb-3 card">
                         <div className="card-body">
-                            <h5 className="card-title"> table  des Produit</h5>
+                            <h5 className="card-title"> tableau d'Utilisateur</h5>
                             <table className="mb-0 table">
                                 <thead>
                                     <tr>
@@ -53,7 +55,7 @@ export default function TableMagasinier() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {Magasinier.map((value, i) => (
+                                    {User.map((value, i) => (
                                         <tr key={i}>
                                             <td>{value.NomUtilisateur}</td>
                                             <td>{value.PrenomUtilisateur}</td>
@@ -67,7 +69,7 @@ export default function TableMagasinier() {
                                                 </button>
                                                 <button
                                                     className="mb-2 mr-2 btn-transition btn btn-outline-danger"
-                                                    onClick={() => DeleteMagasinier(value._id)}
+                                                    onClick={() => handleClickOpen(value)}
                                                 >
                                                     <i
                                                         className="pe-7s-trash"
@@ -86,6 +88,7 @@ export default function TableMagasinier() {
                                     ))}
                                 </tbody>
                             </table>
+                            {open? <Modal_delete  user={userSelected} open={open}  onClose={handleClose}/> :null}
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import Banner from '../Banner';
 
 export default function Add_products() {
@@ -9,7 +9,8 @@ export default function Add_products() {
   const [lieu_stokage, setLieu_stokage] = useState("");
   const [Code, setCode] = useState("");
   const [type, settype] = useState("");
-
+  
+  const [categorie, setCategorie] = useState([]);
 
   const ChangeCategorie = (event) => {
     setCategorie_article(event.target.value);
@@ -27,6 +28,11 @@ export default function Add_products() {
   const ChangeLieu_stokage = (event) => {
     setLieu_stokage(event.target.value);
   };
+
+ useEffect(() => {
+      getAllCategorie();
+  }, []);
+
   const HandleSubmit = () => {
     let data = {
 
@@ -36,9 +42,10 @@ export default function Add_products() {
       Code: Code,
       type: type,
 
-    };
+    }
     console.log("here response", data);
 
+ 
     axios
       .post("http://localhost:3200/api/ajouter_Produits", data)
       .then((response) => {
@@ -48,6 +55,15 @@ export default function Add_products() {
         console.log(error);
       });
   }
+  const getAllCategorie=()=>{ axios
+    .get("http://localhost:3200/api/get_Categorie")
+    .then((result) => {
+      setCategorie(result.data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
   return (
     <Fragment>
       <div className="app-main__inner">
@@ -57,22 +73,24 @@ export default function Add_products() {
             <h1 className="card-title">Remplir le formulaire</h1>
             <form>
               <div className="form-row">
-                <div className="col-md-6">
+                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="examplePassword11">categorie_article</label>
-                    <input
+                    <label htmlFor="examplePassword11">Categorie Article</label>
+                    <select 
                       name="categorie"
-                      id="exampleCategorie"
-                      placeholder="categorie article"
-                      type="text"
                       className="form-control"
-                      onChange={(event) => ChangeCategorie(event)}
-                    />
+                      onChange={(event) => ChangeCategorie(event)} >
+                     <option value="">Sélectionner Ctergorier </option>
+                     {categorie.map((value,i)=>(
+                        <option
+                      key={i} value={value.categorie}>{value.categorie}</option>
+                     ))}
+                     </select>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="examplCode">code article</label>
+                    <label htmlFor="examplCode">Code Article</label>
                     <input
                       name="Code"
                       id="exampleCode"
@@ -85,11 +103,11 @@ export default function Add_products() {
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampletype">type</label>
+                    <label htmlFor="exampletype"> Type</label>
                     <input
                       name="type_article"
                       id="exampletype_article"
-                      placeholder="Poste Occupé"
+                      placeholder="Type"
                       type="text"
                       className="form-control"
                       onChange={(event) => Changetype_articl(event)}
@@ -110,7 +128,7 @@ export default function Add_products() {
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleLieu_stokage">Lieu_stokage"</label>
+                    <label htmlFor="exampleLieu_stokage">Lieu Stokage"</label>
                     <input
                       name="Lieu_stokage"
                       id="exampleLieu_stokage"

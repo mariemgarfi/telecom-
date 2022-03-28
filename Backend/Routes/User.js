@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const Magasinier = require("../Models/Magasinier");
+const User = require("../Models/User");
 
 
 
 router.post("/ajouter_Utilisateur", (req, res) => {
     console.log("heyyyytt req .body", req.body);
-    const magasinier= new Magasinier({
+    const user= new User({
         NomUtilisateur:req.body.NomUtilisateur,
         PrenomUtilisateur: req.body.PrenomUtilisateur,
         Email: req.body.Email,
@@ -15,13 +15,13 @@ router.post("/ajouter_Utilisateur", (req, res) => {
         Address:req.body.Address,
         Ville:req.body.Ville,
     });
-    magasinier.save();
+    user.save();
     res.status(200).json({
         message: "user added succesful",
       });
     });
-    router.get("/get_Magasinier", (req, res) => {
-      Magasinier.find((err, docs) => {
+    router.get("/get_user", (req, res) => {
+      User.find((err, docs) => {
         if (err) {
           console.log(err);
         } else {
@@ -31,13 +31,12 @@ router.post("/ajouter_Utilisateur", (req, res) => {
         }
       });
     });
-    router.delete("/delete_Magasinier/:id", (req, res) => {
+    router.delete("/delete_user/:id", (req, res) => {
       console.log("herreeeeeee id ", req.params.id);
-      Magasinier.deleteOne({ _id: req.params.id }).then(
+      User.deleteOne({ _id: req.params.id }).then(
         res.status(200).json({
-          message: "Magasinier deleted succesful",
+          message: "user deleted succesful",
         })
       );
     });
     module.exports = router;
-    
