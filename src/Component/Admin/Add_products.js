@@ -1,25 +1,39 @@
-import axios from 'axios';
-import React, { useState, Fragment } from 'react'
-import Banner from '../Banner';
+import axios from "axios";
+import React, { useState, Fragment, useEffect } from "react";
+import Banner from "../Banner";
 
 export default function Add_products() {
-
   const [categorie_article, setCategorie_article] = useState("");
   const [reference, setReference] = useState("");
   const [lieu_stokage, setLieu_stokage] = useState("");
   const [Code, setCode] = useState("");
   const [type, settype] = useState("");
+  const [category, setCategory] = useState([]);
+  useEffect(() => {
+    getCategory();
+  }, []);
 
+  const getCategory = () => {
+    axios
+      .get("http://localhost:3200/api/get_Categorie")
+      .then((result) => {
+        setCategory(result.data.category);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const ChangeCategorie = (event) => {
     setCategorie_article(event.target.value);
+    console.log(event.target.value);
   };
 
   const ChangeCode = (event) => {
-    setCode(event.target.value)
+    setCode(event.target.value);
   };
   const Changetype_articl = (event) => {
-    settype(event.target.value)
+    settype(event.target.value);
   };
   const ChangeReference = (event) => {
     setReference(event.target.value);
@@ -29,13 +43,11 @@ export default function Add_products() {
   };
   const HandleSubmit = () => {
     let data = {
-
       categorie_article: categorie_article,
       lieu_stokagee: lieu_stokage,
       reference: reference,
       Code: Code,
       type: type,
-
     };
     console.log("here response", data);
 
@@ -47,7 +59,7 @@ export default function Add_products() {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
   return (
     <Fragment>
       <div className="app-main__inner">
@@ -59,15 +71,20 @@ export default function Add_products() {
               <div className="form-row">
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="examplePassword11">categorie_article</label>
-                    <input
-                      name="categorie"
-                      id="exampleCategorie"
-                      placeholder="categorie article"
-                      type="text"
-                      className="form-control"
+                    <label htmlFor="exampleSelect">categorie_article</label>
+                    <select
+                      name="select"
+                      id="exampleSelect"
                       onChange={(event) => ChangeCategorie(event)}
-                    />
+                      className="form-control"
+                    >
+                      <option value=""> Select Categorie </option>
+                      {category.map((value,i)=>(
+                        <option key={i} value={value.Categorie}>{value.Categorie}</option>
+                      ))}
+                      
+                   
+                    </select>
                   </div>
                 </div>
                 <div className="col-md-6">
@@ -93,7 +110,8 @@ export default function Add_products() {
                       type="text"
                       className="form-control"
                       onChange={(event) => Changetype_articl(event)}
-                    /></div>
+                    />
+                  </div>
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
@@ -121,7 +139,6 @@ export default function Add_products() {
                     />
                   </div>
                 </div>
-
               </div>
               <button
                 type="button"

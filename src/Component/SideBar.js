@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function SideBar() {
   return (
@@ -52,6 +53,12 @@ export default function SideBar() {
                 <i className="metismenu-icon pe-7s-rocket" />
                 Dashboard Example 1
               </a>
+            </li>
+            <li>
+              <Link to="/Add_commande" >
+                <i className="metismenu-icon pe-7s-rocket" />
+                Ajouter commande
+              </Link>
             </li>
             <li className="app-sidebar__heading">UI Components</li>
             <li>

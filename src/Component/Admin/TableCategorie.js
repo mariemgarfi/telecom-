@@ -13,7 +13,7 @@ export default function TableCategorie() {
         axios
             .get("http://localhost:3200/api/get_Categorie")
             .then((result) => {
-                setCategorie(result.data.data);
+                setCategorie(result.data.category);
             })
             .catch((error) => {
                 console.log(error);

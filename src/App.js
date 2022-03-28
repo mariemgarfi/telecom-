@@ -10,27 +10,29 @@ import NavBar from "./Component/NavBar";
 import SideBar from "./Component/SideBar";
 import Add_Categorie from "./Component/Admin/Add_Categorie";
 import TableCategorie from "./Component/Admin/TableCategorie";
-
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Edit_commande from "./Component/Admin/Edit_commande";
 function App() {
   return (
     <div className="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
       <NavBar />
 
       <div className="app-main">
+      <BrowserRouter>
+
         <SideBar />
         <div className="app-main__outer">
-          {/*  <Add_fournisseur/> 
-          <Display_fourniseur/>
-          <Tableproducts/>
-          <Add_commande/> 
-           
-             <Add_magasinier/>
-             <TableMagasinier/> 
-             <Add_Categorie />
-          <TableCategorie/>*/}
-<Add_products/>
+        <Routes>
+        <Route path="/Add_commande" element={<Add_commande />}/>
+        <Route path="/Edit_commande/:id" element={<Edit_commande />}/>
+        </Routes>
 
         </div>
+        </BrowserRouter>
       </div>
     </div>
   );
