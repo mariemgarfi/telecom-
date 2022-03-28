@@ -120,7 +120,7 @@ export default function Add_commande() {
                       className="form-control"
                       onChange={(event) => ChangeCategorie_article(event)} >
                       <option value="">Sélectionner Ctergorier </option>
-                      {categorie.map((value, i) => (
+                      {categorie?.map((value, i) => (
                         <option
                           key={i} value={value.categorie}>{value.categorie}</option>
                       ))}

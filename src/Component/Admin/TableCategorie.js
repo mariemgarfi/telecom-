@@ -50,7 +50,7 @@ export default function TableCategorie() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {Categorie.map((value, i) => (
+                                    {Categorie?.map((value, i) => (
                                         <tr key={i}>
                                             <td>{value.categorie}</td>
 
