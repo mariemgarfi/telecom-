@@ -11,7 +11,7 @@ export default function Add_magasinier() {
   const [Address, setAddress] = useState("");
   const [Ville, setVille] = useState("");
   const [Poste, setPoste] = useState("");
-  let navigate=useNavigate()
+  let navigate = useNavigate();
 
   const ChangeNomUtilisateur = (event) => {
     setNomUtilisateur(event.target.value);
@@ -51,8 +51,7 @@ export default function Add_magasinier() {
       .post("http://localhost:3200/api/ajouter_Utilisateur", data)
       .then((response) => {
         console.log("here response", response.data.message);
-        navigate("/tableUser")
-
+        navigate("/tableUser");
       })
       .catch((error) => {
         console.log(error);

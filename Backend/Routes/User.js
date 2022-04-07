@@ -29,7 +29,7 @@ router.put("/Update_Utilisateur", (req, res) => {
     Address: req.body.Address,
     Ville: req.body.Ville,
   };
-  User.updateOne({ _id: req.body._id }, user).then(
+  User.updateOne({ _id: req.body._id } , user).then(
     res.status(200).json({
       message: "user updated successfuly",
     })

@@ -72,7 +72,6 @@ export default function Edit_User() {
       Address: Address,
       Ville: Ville,
     };
-    console.log(data);
 
     axios
       .put("http://localhost:3200/api/Update_Utilisateur", data)
