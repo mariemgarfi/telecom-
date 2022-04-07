@@ -7,10 +7,11 @@ const Products = require("../Models/Products");
 router.post("/ajouter_Produits", (req, res) => {
   console.log("heyyyytt req .body", req.body);
   const products = new Products({
-    categorie_article: req.body.categorie_article,
-    lieu_stokage: req.body.lieu_stokage,
+    magasin:req.body.magasin,
+    categorie: req.body.categorie,
+    lieu_de_stokage: req.body.lieu_de_stokage,
     reference: req.body.reference,
-    Code: req.body.Code,
+    Code_article: req.body.Code_article,
     type: req.body.type,
   });
   products.save();
@@ -18,6 +19,22 @@ router.post("/ajouter_Produits", (req, res) => {
     message: "Products added succesful",
   });
 });
+router.put("/Update_Products", (req, res) => {
+  const products = {
+    _id: req.body._id,
+    magasin:req.body.magasin,
+    categorie: req.body.categorie,
+    lieu_de_stokage: req.body.lieu_de_stokage,
+    reference: req.body.reference,
+    Code_article: req.body.Code_article,
+    type: req.body.type,
+  };
+  Products.updateOne({ _id: req.body._id }, products).then(
+    res.status(200).json({
+      message: "products updated successfuly",
+    })
+  );
+})
 router.get("/get_Products", (req, res) => {
   Products.find((err, docs) => {
     if (err) {
@@ -25,6 +42,15 @@ router.get("/get_Products", (req, res) => {
     } else {
       res.status(200).json({
         data: docs,
+      });
+    }
+  });
+});
+router.get("/get_Products_byId/:id", (req, res) => {
+ Products.findOne({ _id: req.params.id }).then((findedObject) => {
+    if (findedObject) {
+      res.status(200).json({
+      Products: findedObject,
       });
     }
   });

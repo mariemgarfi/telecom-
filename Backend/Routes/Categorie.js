@@ -9,7 +9,7 @@ const Categorie=require("../Models/Categorie");
 router.post("/ajouter_Categorie", (req, res) => {
   console.log("heyyyytt req .body", req.body);
   const categorie = new Categorie({
-    Categorie: req.body.Categorie,
+    categorie: req.body.categorie,
 
   });
   categorie.save();
@@ -18,7 +18,26 @@ router.post("/ajouter_Categorie", (req, res) => {
   });
 });
 
-
+router.put("/Update_Categorie", (req, res) => {
+  const categories = {
+    _id: req.body._id,
+    categorie:req.body._id,
+  };
+ Categorie.updateOne({ _id: req.body._id }, categories).then(
+    res.status(200).json({
+      message: "categorie updated successfuly",
+    })
+  );
+});
+router.get("/get_Categorie_byId/:id", (req, res) => {
+ Categorie.findOne({ _id: req.params.id }).then((findedObject) => {
+    if (findedObject) {
+      res.status(200).json({
+        categorie: findedObject,
+      });
+    }
+  });
+});
 
 
 router.get("/get_Categorie", (req, res) => {
@@ -27,7 +46,7 @@ router.get("/get_Categorie", (req, res) => {
       console.log(err);
     } else {
       res.status(200).json({
-        category: docs,
+        categorie: docs,
       });
     }
   });

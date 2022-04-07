@@ -35,7 +35,7 @@ export default function Add_commande() {
     setCommenter(event.target.value);
 
   };
-  const ChangeCategorie_article = (event) => {
+  const ChangeCategorie= (event) => {
     setCategorie_article(event.target.value);
 
   };
@@ -45,7 +45,7 @@ export default function Add_commande() {
 
   const HandleSubmit = () => {
     let data = {
-      Nomarticle: nomarticle,
+      nomarticle: nomarticle,
       codearticle: codearticle,
       categorie_article: categorie_article,
       Email: emailfournisseur,
@@ -66,16 +66,17 @@ export default function Add_commande() {
       .catch((error) => {
         console.log(error);
       });
-  }
-  const getAllCategorie=()=>{ axios
-    .get("http://localhost:3200/api/get_Categorie")
-    .then((result) => {
-      setCategorie(result.data.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
+    }
+      const getAllCategorie=()=>{ axios
+        .get("http://localhost:3200/api/get_Categorie")
+        .then((result) => {
+          setCategorie(result.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }  
+
   return (
     <Fragment>
 
@@ -114,20 +115,19 @@ export default function Add_commande() {
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="examplePassword11">categorie_article</label>
-                    <select
+                    <label htmlFor="examplePassword11">Categorie Article</label>
+                    <select 
                       name="categorie"
                       className="form-control"
-                      onChange={(event) => ChangeCategorie_article(event)} >
-                      <option value="">Sélectionner Ctergorier </option>
-                      {categorie?.map((value, i) => (
+                      onChange={(event) => ChangeCategorie(event)} >
+                     <option value="">Sélectionner Ctergorier </option>
+                     {categorie?.map((value,i)=>(
                         <option
-                          key={i} value={value.categorie}>{value.categorie}</option>
-                      ))}
-                    </select>
+                      key={i} value={value.categorie}>{value.categorie}</option>
+                     ))}
+                     </select>
                   </div>
                 </div>
-
 
                 <div className="col-md-6">
                   <div className="position-relative form-group">

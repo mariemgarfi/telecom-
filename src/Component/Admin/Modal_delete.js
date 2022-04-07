@@ -26,8 +26,16 @@ export default function Modal_delete(props) {
     }
     if (type==="User") {
       url = "http://localhost:3200/api/delete_User/" + data._id;
-
-    }
+ }
+      if (type==="Commande") {
+        url = "http://localhost:3200/api/delete_Commande/" + data._id;
+  
+      }
+   
+      if (type==="Magasin") {
+        url = "http://localhost:3200/api/delete_Magasin/" + data._id;
+  
+      }
     axios.delete(url).then((result) => {
         console.log(result.data.message);
         handleClose();

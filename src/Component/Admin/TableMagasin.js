@@ -2,34 +2,36 @@ import React, { useEffect, useState } from "react";
 import Banner from "../Banner";
 import axios from "axios";
 import Modal_delete from "./Modal_delete";
+import { useNavigate } from "react-router-dom";
 
-export default function Display_fourniseur() {
-  const [fournisseur, setFournisseur] = useState([]);
+export default function Tablefournisseur() {
+  const [Magasin,setMagasin] = useState([]);
     const [open, setOpen] = useState(false);
-    const [FournisseurSelected, setFournisseurSelected] = useState({});
+    const [MagasinSelected, setMagasinSelected] = useState({});
+    let navigate = useNavigate();
 
     useEffect(() => {
-        getAllFournisseur();
+        getAllMagasin();
     }, []);
     
-  const handleClickOpen = (fournisseur) => {
-    setFournisseurSelected(fournisseur)
+  const handleClickOpen = (magasin) => {
+    setMagasinSelected(magasin)
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
-    getAllFournisseur();
+    getAllMagasin();
   };
 
   useEffect(() => {
-    getAllFournisseur();
+    getAllMagasin();
   }, []);
 
-  const getAllFournisseur = () => {
+  const getAllMagasin = () => {
     axios
-      .get("http://localhost:3200/api/get_fournisseur")
+      .get("http://localhost:3200/api/get_Mgasain")
       .then((result) => {
-        setFournisseur(result.data.data);
+        setMagasin(result.data.Magasin);
       })
       .catch((error) => {
         console.log(error);
@@ -39,29 +41,30 @@ export default function Display_fourniseur() {
 
   return (
     <div className="app-main__inner">
-      <Banner title="Mes Fournisseur" icon="pe-7s-Fournisseurs" />
+      <Banner title="Mes Magasin" icon="pe-7s-Fournisseurs" />
       <div className="row">
         <div className="col-12">
           <div className="main-card mb-3 card">
             <div className="card-body">
-              <h5 className="card-title"> table Fournisseur</h5>
+              <h5 className="card-title"> tableaux des magasin</h5>
               <table className="mb-0 table">
                 <thead>
                   <tr>
-                    <th>Nom</th>
-                    <th>Prenom</th>
-                    <th>Email</th>
+                    <th>Nom Magasin</th>
+                    <th>Adress</th>
+                    <th>FIXE</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {fournisseur.map((value, i) => (
+                  {Magasin?.map((value, i) => (
                     <tr key={i}>
-                      <td>{value.nom}</td>
-                      <td>{value.prenom}</td>
-                      <td>{value.email}</td>
+                      <td>{value.nomMagasin}</td>
+                      <td>{value.adress}</td>
+                      <td>{value.fixe}</td>
                       <td>
-                        <button className="mb-2 mr-2 btn-transition btn btn-outline-info">
+                        <button className="mb-2 mr-2 btn-transition btn btn-outline-info"
+                         onClick={() => navigate("/EditMagasin/" + value._id)}>
                           <i className="pe-7s-pen" style={{ fontSize: 18 }}></i>
                         </button>
                         <button
@@ -73,19 +76,12 @@ export default function Display_fourniseur() {
                             style={{ fontSize: 18 }}
                           ></i>
                         </button>
-
-                        <button className="mb-2 mr-2 btn-transition btn btn-outline-success">
-                          <i
-                            className="pe-7s-look "
-                            style={{ fontSize: 18 }}
-                          ></i>
-                        </button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              {open? <Modal_delete type="Fournisseur"  data={FournisseurSelected} open={open}  onClose={handleClose}/> :null}
+              {open? <Modal_delete type="Magasin"  data={MagasinSelected} open={open}  onClose={handleClose}/> :null}
             </div>
           </div>
         </div>

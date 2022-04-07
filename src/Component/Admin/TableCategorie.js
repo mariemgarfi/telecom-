@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import Banner from "../Banner";
 import axios from "axios";
 import Modal_delete from "./Modal_delete";
+import { useNavigate } from "react-router-dom";
 
 export default function TableCategorie() {
-  const [Categorie, setCategorie] = useState([]);
+  const [categorie, setCategorie] = useState([]);
   const [open, setOpen] = useState(false);
   const [CategorieSelected, setCategorieSelected] = useState({});
-
+  let navigate = useNavigate();
   const handleClickOpen = (categorie) => {
     setCategorieSelected(categorie);
     setOpen(true);
@@ -24,7 +25,7 @@ export default function TableCategorie() {
     axios
       .get("http://localhost:3200/api/get_Categorie")
       .then((result) => {
-        setCategorie(result.data.category);
+        setCategorie(result.data.categorie);
       })
       .catch((error) => {
         console.log(error);
@@ -47,12 +48,13 @@ export default function TableCategorie() {
                   </tr>
                 </thead>
                 <tbody>
-                  {Categorie?.map((value, i) => (
+                  {categorie?.map((value, i) => (
                     <tr key={i}>
-                      <td>{value.Categorie}</td>
+                      <td>{value.categorie}</td>
 
                       <td>
-                        <button className="mb-2 mr-2 btn-transition btn btn-outline-info">
+                        <button className="mb-2 mr-2 btn-transition btn btn-outline-info"
+                          onClick={() => navigate("/EditCategorie/" + value._id)}>
                           <i className="pe-7s-pen" style={{ fontSize: 18 }}></i>
                         </button>
                         <button
