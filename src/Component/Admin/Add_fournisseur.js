@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
 import Banner from "../Banner";
+import { useNavigate } from "react-router-dom";
 
 export default function Add_fournisseur() {
   const [nom, setNom] = useState("");
@@ -13,6 +14,7 @@ export default function Add_fournisseur() {
   const [code_postal, setcode_postal] = useState("");
   const [poste_occupe, setPoste_occupé] = useState("");
   const [Site_Web, setSite_Web] = useState("");
+  let navigate=useNavigate()
 
   const ChangeNom = (event) => {
     setNom(event.target.value);
@@ -65,6 +67,7 @@ export default function Add_fournisseur() {
       .post("http://localhost:3200/api/ajouter_fournisseur", data)
       .then((response) => {
         console.log("here response", response.data.message);
+        navigate("/Display_fournisseur");
       })
       .catch((error) => {
         console.log(error);

@@ -106,14 +106,20 @@ export default function SideBar() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="Display_fourniseur">
-                    <i className="metismenu-icon"> </i>Modifier Fournisseur
+                  <Link to="Tablefournisseur">
+                    <i className="metismenu-icon"> </i>Tableau de  Fournisseur
                   </Link>
                 </li>
                 <li>
                   <Link to="Add_commande">
                     <i className="metismenu-icon"> </i>
                     Ajouter Commande
+                  </Link>
+                </li>
+                <li>
+                  <Link to="TableCommande">
+                    <i className="metismenu-icon"> </i>
+                 Tableau de Cammande 
                   </Link>
                 </li>
               </ul>
@@ -126,6 +132,7 @@ export default function SideBar() {
                 <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
               </Link>
               <ul>
+
                <li>
               <Link to="Add_User">
                 <i className="metismenu-icon pe-7s-display2" />
@@ -140,6 +147,29 @@ export default function SideBar() {
                </li>
             </ul>
             </li>
+            <li>
+              <Link to="#">
+                <i className="metismenu-icon pe-7s-car" />
+             Magasin
+                <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
+              </Link>
+
+              <ul>
+               <li>
+              <Link to="Addmagasin">
+                <i className="metismenu-icon pe-7s-display2" />
+                Ajouter Magasin
+                </Link>
+                </li>
+                <li>
+                  <Link to="TableMagasin">
+                    <i className="metismenu-icon"> </i>
+                 Tableau de Magasin
+                  </Link>
+                </li>
+              </ul>
+          </li>
+        
            </ul>
         </div>
       </div>

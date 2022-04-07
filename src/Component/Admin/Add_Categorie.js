@@ -1,22 +1,24 @@
 import axios from "axios";
 import React, { useState, Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 import Banner from "../Banner";
 
 export default function Add_Categorie() {
-  const [Categorie, setCategorie] = useState("");
-
+  const [categorie, setCategorie] = useState("");
+  let navigate = useNavigate()
   const ChangeCategorie = (event) => {
     setCategorie(event.target.value);
   };
 
   const HandleSubmit = () => {
     let data = {
-      Categorie: Categorie,
+      categorie: categorie,
     };
     axios
       .post("http://localhost:3200/api/ajouter_Categorie", data)
       .then((response) => {
         console.log("here response", response.data.message);
+        navigate("/TableCategorie");
       })
       .catch((error) => {
         console.log(error);

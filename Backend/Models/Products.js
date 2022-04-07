@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
    
 const ProductsSchema=mongoose.Schema({
-     
-     categorie:{type : String},
-     lieu_stokage:{type : String},
+  magasin:{type : String},
+  categorie:{type : String},
+     lieu_de_stokage:{type : String},
      reference:{type : String},
-     Code:{type : String},
+     Code_article:{type : String},
      type:{type:String},
     });
 

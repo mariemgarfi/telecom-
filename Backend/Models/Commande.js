@@ -3,9 +3,9 @@ const mongoose = require("mongoose");
 const CommandeSchema=mongoose.Schema({
      
      
-     Nomarticle:{type : String},
+     nomarticle:{type : String},
      codearticle: {type : String},
-     categorie_article:{type : String},
+     categorie:{type : String},
      Email: {type : String},
      quantitearticl: {type : String},
      nomfournisseur:{type : String},

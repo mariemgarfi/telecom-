@@ -3,31 +3,35 @@ import Modal_delete from "./Modal_delete";
 import Banner from "../Banner";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+export default function TableCommande() {
 
-export default function Tableproducts() {
-  const [Products, setProducts] = useState([]);
+  const [Commande, setCommande] = useState([]);
   const [open, setOpen] = useState(false);
-  const [ProductsSelected, setProductsSelected] = useState({});
+  const [CommandeSelected, setCommandeSelected] = useState({});
+
   let navigate = useNavigate();
-  const handleClickOpen = (products) => {
-    setProductsSelected(products);
+
+
+
+
+  const handleClickOpen = (Commande) => {
+    setCommandeSelected(Commande);
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
-    getAllProducts();
+    getAllCommande();
   };
 
   useEffect(() => {
-    getAllProducts();
-    
+    getAllCommande();
   }, []);
 
-  const getAllProducts = () => {
+  const getAllCommande = () => {
     axios
-      .get("http://localhost:3200/api/get_Products")
+      .get("http://localhost:3200/api/get_Commande")
       .then((result) => {
-        setProducts(result.data.data);
+        setCommande(result.data.data);
       })
       .catch((error) => {
         console.log(error);
@@ -36,33 +40,34 @@ export default function Tableproducts() {
 
   return (
     <div className="app-main__inner">
-      <Banner title="Mes Produits" icon="fa-shopping-cart" />
+      <Banner title="Mes Commandes" icon="fa-shopping-cart" />
       <div className="row">
         <div className="col-12">
           <div className="main-card mb-3 card">
             <div className="card-body">
-              <h5 className="card-title"> table des Produit</h5>
+              <h5 className="card-title"> table des Commandes</h5>
               <table className="mb-0 table">
                 <thead>
                   <tr>
-                  <th>Nom magasin</th>
-                    <th>categorie article</th>
-                    <th>code</th>
-                    <th>type</th>
-                    <th>Action</th>
+                    <th> Nom Article</th>
+                    <th> categorie_article</th>
+                    <th> nom fournisseur</th>
+                    <th>date commande</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {Products?.map((value, i) => (
+                  {Commande?.map((value, i) => (
                     <tr key={i}>
-                       <td>{value.nomMagasin}</td>
-                      <td>{value.categorie}</td>
-                      <td>{value.Code_article}</td>
-                      <td>{value.type}</td>
+                      <td>{value.nomarticle}</td>
+                      <td>{value.categorie_article}</td>
+                      <td>{value.nomfournisseur}</td>
+                      <td>{value.datecommande}</td>
+
                       <td>
                         <button className="mb-2 mr-2 btn-transition btn btn-outline-info"
-                          onClick={() => navigate("/EditProducts/" + value._id)}>
+                          onClick={() => navigate("/Edit_Commande/" + value._id)}>
                           <i className="pe-7s-pen" style={{ fontSize: 18 }}></i>
+
                         </button>
                         <button
                           className="mb-2 mr-2 btn-transition btn btn-outline-danger"
@@ -73,6 +78,8 @@ export default function Tableproducts() {
                             style={{ fontSize: 18 }}
                           ></i>
                         </button>
+
+                       
                       </td>
                     </tr>
                   ))}
@@ -80,10 +87,10 @@ export default function Tableproducts() {
               </table>
               {open ? (
                 <Modal_delete
-                  data={ProductsSelected}
+                  data={CommandeSelected}
                   open={open}
                   onClose={handleClose}
-                  type="Produit"
+                  type="Commande"
                 />
               ) : null}
             </div>

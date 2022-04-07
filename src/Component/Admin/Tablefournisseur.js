@@ -1,67 +1,70 @@
 import React, { useEffect, useState } from "react";
-import Modal_delete from "./Modal_delete";
 import Banner from "../Banner";
 import axios from "axios";
+import Modal_delete from "./Modal_delete";
 import { useNavigate } from "react-router-dom";
 
-export default function Tableproducts() {
-  const [Products, setProducts] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [ProductsSelected, setProductsSelected] = useState({});
-  let navigate = useNavigate();
-  const handleClickOpen = (products) => {
-    setProductsSelected(products);
+export default function Tablefournisseur() {
+  const [fournisseur, setFournisseur] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [FournisseurSelected, setFournisseurSelected] = useState({});
+    let navigate = useNavigate();
+
+    useEffect(() => {
+        getAllFournisseur();
+    }, []);
+    
+  const handleClickOpen = (fournisseur) => {
+    setFournisseurSelected(fournisseur)
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
-    getAllProducts();
+    getAllFournisseur();
   };
 
   useEffect(() => {
-    getAllProducts();
-    
+    getAllFournisseur();
   }, []);
 
-  const getAllProducts = () => {
+  const getAllFournisseur = () => {
     axios
-      .get("http://localhost:3200/api/get_Products")
+      .get("http://localhost:3200/api/get_fournisseur")
       .then((result) => {
-        setProducts(result.data.data);
+        setFournisseur(result.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+
   return (
     <div className="app-main__inner">
-      <Banner title="Mes Produits" icon="fa-shopping-cart" />
+      <Banner title="Mes Fournisseur" icon="pe-7s-Fournisseurs" />
       <div className="row">
         <div className="col-12">
           <div className="main-card mb-3 card">
             <div className="card-body">
-              <h5 className="card-title"> table des Produit</h5>
+              <h5 className="card-title"> table Fournisseur</h5>
               <table className="mb-0 table">
                 <thead>
                   <tr>
-                  <th>Nom magasin</th>
-                    <th>categorie article</th>
-                    <th>code</th>
-                    <th>type</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Email</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {Products?.map((value, i) => (
+                  {fournisseur.map((value, i) => (
                     <tr key={i}>
-                       <td>{value.nomMagasin}</td>
-                      <td>{value.categorie}</td>
-                      <td>{value.Code_article}</td>
-                      <td>{value.type}</td>
+                      <td>{value.nom}</td>
+                      <td>{value.prenom}</td>
+                      <td>{value.email}</td>
                       <td>
                         <button className="mb-2 mr-2 btn-transition btn btn-outline-info"
-                          onClick={() => navigate("/EditProducts/" + value._id)}>
+                         onClick={() => navigate("/EditFournisseur/" + value._id)}>
                           <i className="pe-7s-pen" style={{ fontSize: 18 }}></i>
                         </button>
                         <button
@@ -78,14 +81,7 @@ export default function Tableproducts() {
                   ))}
                 </tbody>
               </table>
-              {open ? (
-                <Modal_delete
-                  data={ProductsSelected}
-                  open={open}
-                  onClose={handleClose}
-                  type="Produit"
-                />
-              ) : null}
+              {open? <Modal_delete type="Fournisseur"  data={FournisseurSelected} open={open}  onClose={handleClose}/> :null}
             </div>
           </div>
         </div>

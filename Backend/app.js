@@ -7,16 +7,17 @@ const mongoose = require("mongoose"); // import mongoose
 
 
 
-mongoose.connect('mongodb://localhost:27017/telecomDB', { useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/telecomDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 
 var FournisseurRouter = require("./Routes/Fournisseur");
-var ProductsRouter= require("./Routes/Products");
-var UserRouter=require("./Routes/User");
-var CategorieRouter=require("./Routes/Categorie");
+var ProductsRouter = require("./Routes/Products");
+var UserRouter = require("./Routes/User");
+var CategorieRouter = require("./Routes/Categorie");
+var CommandeRouter = require("./Routes/Commande");
+var MagasinRouter = require("./Routes/Magasin");
 
-var CommandeRouter=require("./Routes/Commande");
 
 const app = express()
 app.use(bodyParser.json());
@@ -31,7 +32,8 @@ app.use((req, res, next) => {
 
 app.use("/api", FournisseurRouter);
 app.use("/api", ProductsRouter);
-app.use ("/api", UserRouter);
-app.use("/api",CategorieRouter);
-app.use("/api",CommandeRouter)
-module.exports=app
+app.use("/api", UserRouter);
+app.use("/api", CategorieRouter);
+app.use("/api", CommandeRouter);
+app.use("/api", MagasinRouter)
+module.exports = app

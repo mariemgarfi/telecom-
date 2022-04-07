@@ -79,12 +79,6 @@ export default function TableUser() {
                           ></i>
                         </button>
 
-                        <button className="mb-2 mr-2 btn-transition btn btn-outline-success">
-                          <i
-                            className="pe-7s-look "
-                            style={{ fontSize: 18 }}
-                          ></i>
-                        </button>
                       </td>
                     </tr>
                   ))}
