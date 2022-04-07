@@ -1,29 +1,55 @@
-import axios from 'axios';
-import React, { useState, Fragment, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
-import Banner from '../Banner';
+import React, { Fragment, useEffect, useState } from "react";
+import Banner from "../Banner";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function Add_products() {
-
+export default function EditProducts() {
   const [categorie, setCategorie] = useState("");
   const [reference, setReference] = useState("");
   const [lieu_de_stokage, setLieu_de_stokage] = useState("");
-  const [Code_article, setCode] = useState("");
+  const [Code_article, setCode_article] = useState("");
   const [type, settype] = useState("");
-
   const [categories, setCategories] = useState([]);
   const [magasin, setMagasin] = useState([]);
+  let param = useParams();
   let navigate = useNavigate()
+
+  useEffect(() => {
+    getProductsById();
+    getAllMagasin();
+    getAllCategorie();
+  }, []);
+
+  const getProductsById = () => {
+    axios
+      .get("http://localhost:3200/api/get_Products_byId/" + param.id)
+
+      .then((result) => {
+        let data = result.data.Products;
+        setMagasin(data.magasin);
+        setCategorie(data.categorie_article);
+        setLieu_de_stokage(data.lieu_de_stokage);
+        setReference(data.reference);
+        setCode_article(data.Code_article);
+        settype(data.type);
+        console.log("f", result)
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const ChangeMagasin = (event) => {
     setMagasin(event.target.value);
   };
+
   const ChangeCategorie = (event) => {
     setCategorie(event.target.value);
   };
 
   const ChangeCode = (event) => {
-    setCode(event.target.value)
+    setCode_article(event.target.value)
   };
   const Changetype_articl = (event) => {
     settype(event.target.value)
@@ -31,46 +57,22 @@ export default function Add_products() {
   const ChangeReference = (event) => {
     setReference(event.target.value);
   };
-  const ChangeLieu_de_stokage = (event) => {
+  const ChangeLieu_stokage = (event) => {
     setLieu_de_stokage(event.target.value);
   };
 
-  useEffect(() => {
-    getAllCategorie();
-    getAllMagasin();
-  }, []);
 
-  const HandleSubmit = () => {
-    let data = {
-      magasin: magasin,
-      categorie: categorie,
-      lieu_de_stokagee: lieu_de_stokage,
-      reference: reference,
-      Code_article: Code_article,
-      type: type,
 
-    }
-
+  const getAllCategorie = () => {
     axios
-      .post("http://localhost:3200/api/ajouter_Produits", data)
-      .then((response) => {
-        console.log("here response", response.data.message);
-        navigate("/TableProducts");
+      .get("http://localhost:3200/api/get_Categorie")
+      .then((result) => {
+        setCategories(result.data.categorie);
       })
       .catch((error) => {
         console.log(error);
       });
   }
-  const getAllCategorie = () => {
-    axios
-      .get("http://localhost:3200/api/get_Categorie")
-    .then((result) => {
-      setCategories(result.data.categorie);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  };
   const getAllMagasin = () => {
     axios
       .get("http://localhost:3200/api/get_Mgasain")
@@ -80,7 +82,30 @@ export default function Add_products() {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  const HandleSubmit = () => {
+    let data = {
+      _id: param.id,
+      magasin:magasin,
+      categorie: categorie,
+      lieu_de_stokagee: lieu_de_stokage,
+      reference: reference,
+      Code_article: Code_article,
+      type: type,
+
+    }
+    axios
+      .put("http://localhost:3200/api/Update_Products", data)
+      .then((response) => {
+        console.log("here response", response.data.message);
+        navigate("/TableProducts")
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
 
   return (
     <Fragment>
@@ -91,13 +116,15 @@ export default function Add_products() {
             <h1 className="card-title">Remplir le formulaire</h1>
             <form>
               <div className="form-row">
-                <div className="col-md-6">
+              <div className="col-md-6">
                   <div className="position-relative form-group">
                     <label htmlFor="examplePassword11">Magasin</label>
                     <select
                       name="categorie"
                       className="form-control"
-                      onChange={(event) => ChangeMagasin(event)} >
+                      onChange={(event) => ChangeMagasin(event)} 
+                       value={magasin} >
+
                       <option value="">Sélectionner Magasin </option>
                       {magasin?.map((value, i) => (
                         <option
@@ -112,7 +139,9 @@ export default function Add_products() {
                     <select
                       name="categorie"
                       className="form-control"
-                      onChange={(event) => ChangeCategorie(event)} >
+                      onChange={(event) => ChangeCategorie(event)}
+                      value={categorie} >
+
                       <option value="">Sélectionner Ctergorier </option>
                       {categories?.map((value, i) => (
                         <option
@@ -126,15 +155,15 @@ export default function Add_products() {
                     <label htmlFor="examplCode">Code Article</label>
                     <input
                       name="Code"
-                      id="examplecode_article"
+                      id="exampleCode"
                       placeholder="Id"
                       type="text"
                       className="form-control"
                       onChange={(event) => ChangeCode(event)}
+                      value={Code_article || ""}
                     />
                   </div>
                 </div>
-
                 <div className="col-md-6">
                   <div className="position-relative form-group">
                     <label htmlFor="exampletype"> Type</label>
@@ -145,6 +174,7 @@ export default function Add_products() {
                       type="text"
                       className="form-control"
                       onChange={(event) => Changetype_articl(event)}
+                      value={type || ""}
                     /></div>
                 </div>
                 <div className="col-md-6">
@@ -157,6 +187,7 @@ export default function Add_products() {
                       type="text"
                       className="form-control"
                       onChange={(event) => ChangeReference(event)}
+                      value={reference || ""}
                     />
                   </div>
                 </div>
@@ -169,7 +200,8 @@ export default function Add_products() {
                       placeholder="Lieu_stokage"
                       type="text"
                       className="form-control"
-                      onChange={(event) => ChangeLieu_de_stokage(event)}
+                      onChange={(event) => ChangeLieu_stokage(event)}
+                      value={lieu_de_stokage || ""}
                     />
                   </div>
                 </div>

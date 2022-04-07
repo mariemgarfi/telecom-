@@ -12,7 +12,6 @@ export default function Edit_User() {
   const [Ville, setVille] = useState("");
   const [Poste, setPoste] = useState("");
 
-  const [ahlem, setAhlem] = useState("");
   let param = useParams();
   let navigate=useNavigate()
 
