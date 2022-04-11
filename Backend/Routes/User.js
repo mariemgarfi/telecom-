@@ -1,23 +1,28 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../Models/User");
+const bcrypt = require('bcrypt');
 
 router.post("/ajouter_Utilisateur", (req, res) => {
   console.log("heyyyytt req .body", req.body);
-  const user = new User({
-    NomUtilisateur: req.body.NomUtilisateur,
-    PrenomUtilisateur: req.body.PrenomUtilisateur,
-    Email: req.body.Email,
-    Poste: req.body.Poste,
-    Tele: req.body.Tele,
-    Address: req.body.Address,
-    Ville: req.body.Ville,
-  });
-  user.save();
-  res.status(200).json({
-    message: "user added succesful",
+  bcrypt.hash(req.body.password, 10).then((hash) => {
+    const user = new User({
+      NomUtilisateur: req.body.NomUtilisateur,
+      PrenomUtilisateur: req.body.PrenomUtilisateur,
+      Email: req.body.Email,
+      Poste: req.body.Poste,
+      Tel: req.body.Tel,
+      password: hash,
+      magasin: req.body.magasin,
+    });
+
+    user.save();
+    res.status(200).json({
+      message: "user added succesful",
+    });
   });
 });
+
 router.put("/Update_Utilisateur", (req, res) => {
   const user = {
     _id: req.body._id,
@@ -25,11 +30,11 @@ router.put("/Update_Utilisateur", (req, res) => {
     PrenomUtilisateur: req.body.PrenomUtilisateur,
     Email: req.body.Email,
     Poste: req.body.Poste,
-    Tele: req.body.Tele,
-    Address: req.body.Address,
-    Ville: req.body.Ville,
+    Tel: req.body.Tel,
+    password: req.body.password,
+    magasin: req.body.magasin,
   };
-  User.updateOne({ _id: req.body._id } , user).then(
+  User.updateOne({ _id: req.body._id }, user).then(
     res.status(200).json({
       message: "user updated successfuly",
     })
@@ -66,4 +71,36 @@ router.delete("/delete_User/:id", (req, res) => {
     })
   );
 });
+router.post("/login", (req, res) => {
+  User.findOne({ Email: req.body.email })
+    .then((findedUser) => {
+      console.log("findedUser", findedUser);
+      if (!findedUser) {
+        res.status(200).json({
+          message: "0",
+        });
+      }
+      return bcrypt.compare(req.body.password, findedUser.password);
+    })
+    .then((correctUserPwd) => {
+      if (!correctUserPwd) {
+        res.status(200).json({
+          message: "1",
+        });
+      }
+      User.findOne({ emailAdress: req.body.email }).then((finalUser) => {
+        let user = {
+          id: finalUser._id,
+          NomUtilisateur: finalUser.NomUtilisateur,
+          PrenomUtilisateur: finalUser.PrenomUtilisateur,
+          Poste: finalUser.Poste,
+        };
+        res.status(200).json({
+          user: user,
+          message: "2",
+        });
+      });
+    });
+});
+
 module.exports = router;

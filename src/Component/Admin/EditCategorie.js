@@ -19,7 +19,7 @@ export default function EditCategorie() {
           .get("http://localhost:3200/api/get_Categorie_byId/" + param.id)
           .then((result) => {
             let data = result.data.categorie;
-            setCategorie(data.categorie);
+            setCategorie(data.Categorie);
         })
         .catch((err) => {
           console.log(err);
@@ -44,7 +44,7 @@ export default function EditCategorie() {
   return (
     <Fragment>
     <div className="app-main__inner">
-      <Banner title="Ajouter Categorie" icon="fa-cart-arrow-down" />
+      <Banner title="Modifier Categorie" icon="fa-cart-arrow-down" />
       <div className="main-card mb-3 card">
         <div className="card-body">
           <h1 className="card-title">Remplir le formulaire</h1>
