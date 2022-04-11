@@ -50,7 +50,7 @@ export default function TableCategorie() {
                 <tbody>
                   {categorie?.map((value, i) => (
                     <tr key={i}>
-                      <td>{value.categorie}</td>
+                      <td>{value.Categorie}</td>
 
                       <td>
                         <button className="mb-2 mr-2 btn-transition btn btn-outline-info"

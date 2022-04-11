@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Banner from "../Banner";
 
@@ -7,11 +7,28 @@ export default function Add_magasinier() {
   const [NomUtilisateur, setNomUtilisateur] = useState("");
   const [PrenomUtilisateur, setPrenomUtilisateur] = useState("");
   const [Email, setEmail] = useState("");
-  const [Tele, setTele] = useState();
+  const [Tel, setTel] = useState();
   const [Address, setAddress] = useState("");
   const [Ville, setVille] = useState("");
   const [Poste, setPoste] = useState("");
-  let navigate=useNavigate()
+  const [magasin, setMagasin] = useState({});
+  const [DataMagasin, setDataMagasin] = useState([]);
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    getAllMagasin();
+  }, []);
+
+  const getAllMagasin = () => {
+    axios
+      .get("http://localhost:3200/api/get_Mgasain")
+      .then((result) => {
+        setDataMagasin(result.data.Magasin);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const ChangeNomUtilisateur = (event) => {
     setNomUtilisateur(event.target.value);
@@ -26,24 +43,23 @@ export default function Add_magasinier() {
     setPoste(event.target.value);
   };
 
-  const ChangeTele = (event) => {
-    setTele(event.target.value);
+  const ChangeTel = (event) => {
+    setTel(event.target.value);
   };
-  const ChangeAddress = (event) => {
-    setAddress(event.target.value);
-  };
-  const ChangeVille = (event) => {
-    setVille(event.target.value);
-  };
+
+  const ChangeMagasin=(event)=>{
+    setMagasin(event.target.value)
+  }
   const HandleSubmit = () => {
     let data = {
       NomUtilisateur: NomUtilisateur,
       PrenomUtilisateur: PrenomUtilisateur,
       Email: Email,
       Poste: Poste,
-      Tele: Tele,
-      Address: Address,
-      Ville: Ville,
+      Tel: Tel,
+      password:NomUtilisateur+Tel,
+      magasin:magasin
+     
     };
     console.log("here response", data);
 
@@ -51,8 +67,7 @@ export default function Add_magasinier() {
       .post("http://localhost:3200/api/ajouter_Utilisateur", data)
       .then((response) => {
         console.log("here response", response.data.message);
-        navigate("/tableUser")
-
+        navigate("/tableUser");
       })
       .catch((error) => {
         console.log(error);
@@ -69,7 +84,7 @@ export default function Add_magasinier() {
               <div className="form-row">
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleEmail11">NomUtilisateur</label>
+                    <label htmlFor="exampleEmail11">Nom Utilisateur</label>
                     <input
                       name="NomUtilisateur"
                       id="exampleNomUtilisateur"
@@ -82,11 +97,11 @@ export default function Add_magasinier() {
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="examplePassword11">PréNomUtilisateur</label>
+                    <label htmlFor="examplePassword11">Prénom Utilisateur</label>
                     <input
                       name="PréNomUtilisateur"
                       id="examplePassword11"
-                      placeholder="PréNomUtilisateur"
+                      placeholder="Prénom Utilisateur"
                       type="text"
                       className="form-control"
                       onChange={(event) => ChangePrenomUtilisateur(event)}
@@ -108,54 +123,50 @@ export default function Add_magasinier() {
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="examplePoste">Poste Occupé</label>
+                    <label htmlFor="exampleTele">Tel</label>
                     <input
-                      name="Poste"
-                      id="examplePoste"
-                      placeholder="Poste Occupé"
-                      type="text"
-                      className="form-control"
-                      onChange={(event) => ChangePoste(event)}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="position-relative form-group">
-                    <label htmlFor="exampleTele">Tele</label>
-                    <input
-                      name="Telee"
+                      name="Tel"
                       id="exampleTele"
-                      placeholder="Tele"
+                      placeholder="Tel"
                       type="number"
                       className="form-control"
-                      onChange={(event) => ChangeTele(event)}
+                      onChange={(event) => ChangeTel(event)}
                     />
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleAddress2">Address</label>
-                    <input
-                      name="address"
-                      id="exampleAddress"
-                      placeholder="Apartment, studio ,or floor"
-                      type="text"
+                    <label htmlFor="examplePoste">Poste Occupé</label>
+                    <select
+                      name="categorie"
                       className="form-control"
-                      onChange={(event) => ChangeAddress(event)}
-                    />
+                      onChange={(event) => ChangePoste(event)} >
+                      <option value="">Sélectionner Magasin </option>
+                      <option value="RDS">Responsable de stock  </option>
+                      <option value="RDA">Responsable d'achat  </option>
+                      <option value="RDV">Responsable de vente  </option>
+               
+                      
+                    </select>
+                  
                   </div>
                 </div>
+               
+            
+              
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleVille">Ville</label>
-                    <input
-                      name="Ville"
-                      id="exampleille"
-                      placeholder="Ville"
-                      type="text"
+                    <label htmlFor="examplePassword11">Magasin</label>
+                    <select
+                      name="categorie"
                       className="form-control"
-                      onChange={(event) => ChangeVille(event)}
-                    />
+                      onChange={(event) => ChangeMagasin(event)} >
+                      <option value="">Sélectionner Magasin </option>
+                      {DataMagasin?.map((value, i) => (
+                        <option
+                          key={i} value={value._id}>{value.nomMagasin}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               </div>

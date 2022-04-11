@@ -13,6 +13,7 @@ export default function Add_products() {
 
   const [categories, setCategories] = useState([]);
   const [magasin, setMagasin] = useState([]);
+  const [dataMagasin, setDataMagasin] = useState([]);
   let navigate = useNavigate()
 
   const ChangeMagasin = (event) => {
@@ -75,7 +76,7 @@ export default function Add_products() {
     axios
       .get("http://localhost:3200/api/get_Mgasain")
       .then((result) => {
-        setMagasin(result.data.Magasin);
+        setDataMagasin(result.data.Magasin);
       })
       .catch((error) => {
         console.log(error);
@@ -99,7 +100,7 @@ export default function Add_products() {
                       className="form-control"
                       onChange={(event) => ChangeMagasin(event)} >
                       <option value="">Sélectionner Magasin </option>
-                      {magasin?.map((value, i) => (
+                      {dataMagasin?.map((value, i) => (
                         <option
                           key={i} value={value.nomMagasin}>{value.nomMagasin}</option>
                       ))}
@@ -113,10 +114,10 @@ export default function Add_products() {
                       name="categorie"
                       className="form-control"
                       onChange={(event) => ChangeCategorie(event)} >
-                      <option value="">Sélectionner Ctergorier </option>
+                      <option value="">Sélectionner Categorie </option>
                       {categories?.map((value, i) => (
                         <option
-                          key={i} value={value.categorie}>{value.categorie}</option>
+                          key={i} value={value.Categorie}>{value.Categorie}</option>
                       ))}
                     </select>
                   </div>

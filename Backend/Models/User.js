@@ -4,9 +4,9 @@ const UserSchema = mongoose.Schema({
   PrenomUtilisateur: { type: String },
   Email: { type: String },
   Poste: { type: String },
-  Tele: { type: String },
-  Address: { type: String },
-  Ville: { type: String },
+  Tel : { type: String },
+  password : { type: String },
+  magasin :{},
 });
 
 const User= mongoose.model("User", UserSchema);

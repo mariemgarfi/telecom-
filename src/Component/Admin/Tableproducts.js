@@ -55,7 +55,7 @@ export default function Tableproducts() {
                 <tbody>
                   {Products?.map((value, i) => (
                     <tr key={i}>
-                       <td>{value.nomMagasin}</td>
+                       <td>{value.magasin}</td>
                       <td>{value.categorie}</td>
                       <td>{value.Code_article}</td>
                       <td>{value.type}</td>
