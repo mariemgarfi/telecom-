@@ -11,6 +11,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+import UserContext from "../../User_contex";
 
 function Copyright(props) {
   return (
@@ -33,6 +35,9 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
+  const { CurrentUser, setCurrentUser } = React.useContext(UserContext);
+
+  let navigate=useNavigate()
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -44,7 +49,25 @@ export default function SignInSide() {
     axios
       .post("http://localhost:3200/api/login", {email: data.get("email"),password: data.get("password")})
       .then((response) => {
-        console.log("here log ",response.data);
+        if (response.data.message==="2") {
+          localStorage.setItem('connected_user',JSON.stringify(response.data.user))
+          setCurrentUser(response.data.user)
+          if (response.data.user.Poste==="admin") {
+            navigate('/')
+          }
+          if (response.data.user.Poste==="RDS") {
+            setTimeout(() => {
+              navigate('/Tableproducts')
+
+            }, 1000);
+          }
+          if (response.data.user.Poste==="RDA") {
+            navigate('/TableCommande')
+          }
+          if (response.data.user.Poste==="RDV") {
+            navigate('/')
+          }
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -59,7 +82,7 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: "url('assets/login.png')",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"

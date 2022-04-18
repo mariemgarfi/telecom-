@@ -9,6 +9,9 @@ export default function TableCategorie() {
   const [open, setOpen] = useState(false);
   const [CategorieSelected, setCategorieSelected] = useState({});
   let navigate = useNavigate();
+  useEffect(() => {
+    getAllCategorie();
+  }, []);
   const handleClickOpen = (categorie) => {
     setCategorieSelected(categorie);
     setOpen(true);
@@ -17,9 +20,7 @@ export default function TableCategorie() {
     setOpen(false);
     getAllCategorie();
   };
-  useEffect(() => {
-    getAllCategorie();
-  }, []);
+
 
   const getAllCategorie = () => {
     axios

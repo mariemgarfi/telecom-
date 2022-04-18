@@ -4,17 +4,19 @@ const express = require("express");
 
 const router = express.Router();
 const Commande=require("../Models/Commande")
+const Fournisseur = require("../Models/Fournisseur");
+
+
 router.post("/Ajouter_Commande", (req, res) => {
   console.log("heyyyytt req .body", req.body);
   const commande = new Commande({
     nomarticle: req.body.nomarticle,
     codearticle:req.body.codearticle,
     categorie_article: req.body.categorie_article,
-    Email: req.body.Email,
     quantitearticl: req.body.quantitearticl,
-    nomfournisseur: req.body.nomfournisseur,
+    idFournisseur: req.body.idFournisseur,
     datecommande: req.body.datecommande,
-    commenter: req.body.commenter,
+    etat: req.body.etat,
 
   });
   commande.save();
@@ -28,13 +30,13 @@ router.put("/Update_commande", (req, res) => {
     nomarticle: req.body.nomarticle,
     codearticle:req.body.codearticle,
     categorie_article: req.body.categorie_article,
-    Email: req.body.Email,
     quantitearticl: req.body.quantitearticl,
-    nomfournisseur: req.body.nomfournisseur,
+    idFournisseur: req.body.idFournisseur,
     datecommande: req.body.datecommande,
-    commenter: req.body.commenter,
+    etat: req.body.etat,
 
   };
+  console.log("gegegege",commande);
   Commande.updateOne({ _id: req.body._id }, commande).then(
     res.status(200).json({
       message: "Commande updated successfuly",
@@ -44,6 +46,11 @@ router.put("/Update_commande", (req, res) => {
 
 router.get("/get_Commande", (req, res) => {
   Commande.find((err, docs) => {
+  
+  });
+  Commande.find().populate({
+    path:"idFournisseur",
+  }).exec(function(err,docs){
     if (err) {
       console.log(err);
     } else {
@@ -51,18 +58,35 @@ router.get("/get_Commande", (req, res) => {
         data: docs,
       });
     }
-  });
+  })
 });
 
 router.get("/get_commande_byId/:id", (req, res) => {
- Commande.findOne({ _id: req.params.id }).then((findedObject) => {
-    if (findedObject) {
+ Commande.findOne({ _id: req.params.id })
+ .populate({
+  path: "idFournisseur",
+}).exec(function (err, docs) {
+  if (err) {
+    console.log(err);
+  } else {
+    if (docs !== null) {
       res.status(200).json({
-        Commande: findedObject,
+        Commande: docs,
       });
     }
-  });
+  }
 });
+
+});
+router.get("/get_commande_etat", (req, res) => {
+  Commande.find({ etat: "accepter"}).then((findedObject) => {
+     if (findedObject) {
+       res.status(200).json({
+         Commande: findedObject,
+       });
+     }
+   });
+ });
 
 router.delete("/delete_Commande/:id", (req, res) => {
   console.log("herreeeeeee id ", req.params.id);

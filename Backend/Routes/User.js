@@ -74,7 +74,6 @@ router.delete("/delete_User/:id", (req, res) => {
 router.post("/login", (req, res) => {
   User.findOne({ Email: req.body.email })
     .then((findedUser) => {
-      console.log("findedUser", findedUser);
       if (!findedUser) {
         res.status(200).json({
           message: "0",
@@ -84,16 +83,19 @@ router.post("/login", (req, res) => {
     })
     .then((correctUserPwd) => {
       if (!correctUserPwd) {
+        console.log('correctUserPwd',correctUserPwd);
+
         res.status(200).json({
           message: "1",
         });
       }
-      User.findOne({ emailAdress: req.body.email }).then((finalUser) => {
+      User.findOne({ Email: req.body.email }).then((finalUser) => {
         let user = {
           id: finalUser._id,
           NomUtilisateur: finalUser.NomUtilisateur,
           PrenomUtilisateur: finalUser.PrenomUtilisateur,
           Poste: finalUser.Poste,
+          magasin: finalUser.magasin,
         };
         res.status(200).json({
           user: user,
