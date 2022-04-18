@@ -1,27 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Modal_delete from "./Modal_delete";
+import React, { useContext, useEffect, useState } from "react";
 import Banner from "../Banner";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../User_contex";
 export default function TableCommande() {
+  const { CurrentUser, setCurrentUser } = useContext(UserContext);
 
   const [Commande, setCommande] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [CommandeSelected, setCommandeSelected] = useState({});
 
   let navigate = useNavigate();
-
-
-
-
-  const handleClickOpen = (Commande) => {
-    setCommandeSelected(Commande);
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-    getAllCommande();
-  };
 
   useEffect(() => {
     getAllCommande();
@@ -31,6 +18,7 @@ export default function TableCommande() {
     axios
       .get("http://localhost:3200/api/get_Commande")
       .then((result) => {
+        console.log("heertedehud",result.data.data);
         setCommande(result.data.data);
       })
       .catch((error) => {
@@ -50,49 +38,42 @@ export default function TableCommande() {
                 <thead>
                   <tr>
                     <th> Nom Article</th>
-                    <th> categorie_article</th>
+                    <th> code_article</th>
+                    <th> quantité_article</th>
                     <th> nom fournisseur</th>
                     <th>date commande</th>
+                    <th>etat commande</th>
                   </tr>
                 </thead>
                 <tbody>
                   {Commande?.map((value, i) => (
                     <tr key={i}>
                       <td>{value.nomarticle}</td>
-                      <td>{value.categorie_article}</td>
-                      <td>{value.nomfournisseur}</td>
+                      <td>{value.codearticle}</td>
+                      <td>{value.quantitearticl}</td>
+                      <td>{value.idFournisseur.nom} {value.idFournisseur.prenom}</td>
                       <td>{value.datecommande}</td>
+                      <td style={{color:`${value.etat==="attente"?"orange":value.etat==="accepter"?"green":"red"}`}} >{value.etat}</td>
 
                       <td>
-                        <button className="mb-2 mr-2 btn-transition btn btn-outline-info"
-                          onClick={() => navigate("/Edit_Commande/" + value._id)}>
-                          <i className="pe-7s-pen" style={{ fontSize: 18 }}></i>
-
-                        </button>
-                        <button
-                          className="mb-2 mr-2 btn-transition btn btn-outline-danger"
-                          onClick={() => handleClickOpen(value)}
-                        >
-                          <i
-                            className="pe-7s-trash"
-                            style={{ fontSize: 18 }}
-                          ></i>
-                        </button>
-
-                       
+                        {CurrentUser.Poste === "admin" ? (
+                          <button
+                            className="mb-2 mr-2 btn-transition btn btn-outline-info"
+                            onClick={() =>
+                              navigate("/Edit_Commande/" + value._id)
+                            }
+                          >
+                            <i
+                              className="pe-7s-pen"
+                              style={{ fontSize: 18 }}
+                            ></i>
+                          </button>
+                        ) : null}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              {open ? (
-                <Modal_delete
-                  data={CommandeSelected}
-                  open={open}
-                  onClose={handleClose}
-                  type="Commande"
-                />
-              ) : null}
             </div>
           </div>
         </div>

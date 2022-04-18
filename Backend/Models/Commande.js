@@ -6,11 +6,11 @@ const CommandeSchema=mongoose.Schema({
      nomarticle:{type : String},
      codearticle: {type : String},
      categorie:{type : String},
-     Email: {type : String},
      quantitearticl: {type : String},
-     nomfournisseur:{type : String},
+     categorie_article: {type : String},
+     idFournisseur:{ type: mongoose.Schema.Types.ObjectId, ref: 'Fournisseur' },
      datecommande: {type : String},
-     commenter: {type : String}
+     etat: {type : String}
     });
 
     const Commande= mongoose.model("Commande",CommandeSchema);
