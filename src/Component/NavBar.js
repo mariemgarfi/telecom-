@@ -129,7 +129,7 @@ export default function NavBar() {
                 </div>
                 <div className="widget-content-left ml-3 header-user-info">
                   <div className="widget-heading">{`${CurrentUser?.NomUtilisateur} ${CurrentUser?.PrenomUtilisateur}`}</div>
-                  <div className="widget-subheading">{CurrentUser?.Poste==="admin"?"admin":CurrentUser?.Poste==="RDS"?"Responsable de stock":CurrentUser?.Poste==="RDA"?"Responsable d'achat":"Responsable de vente"}</div>
+                  <div className="widget-subheading">{CurrentUser?.Poste==="admin"?"admin":CurrentUser?.Poste==="RDS"?"Responsable de stock":CurrentUser?.Poste==="RDA"?"Responsable d'achat":"Super Admin"}</div>
                 </div>
                
               </div>

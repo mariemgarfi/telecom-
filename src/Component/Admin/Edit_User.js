@@ -1,24 +1,36 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import Banner from "../Banner";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import UserContext from "../../User_contex";
 
 export default function Edit_User() {
   const [NomUtilisateur, setNomUtilisateur] = useState("");
   const [PrenomUtilisateur, setPrenomUtilisateur] = useState("");
   const [Email, setEmail] = useState("");
   const [Tele, setTele] = useState();
-  const [Address, setAddress] = useState("");
-  const [Ville, setVille] = useState("");
   const [Poste, setPoste] = useState("");
+  const [magasin, setMagasin] = useState("");
+  const [DataMagasin, setDataMagasin] = useState([]);
+  const { CurrentUser, setCurrentUser } = useContext(UserContext);
 
   let param = useParams();
   let navigate=useNavigate()
 
   useEffect(() => {
     getUserById();
+    getAllMagasin();
   }, []);
-
+  const getAllMagasin = () => {
+    axios
+      .get("http://localhost:3200/api/get_Mgasain")
+      .then((result) => {
+        setDataMagasin(result.data.Magasin);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const getUserById = () => {
     axios
       .get("http://localhost:3200/api/get_user_byId/" + param.id)
@@ -27,9 +39,8 @@ export default function Edit_User() {
         setNomUtilisateur(data.NomUtilisateur);
         setPrenomUtilisateur(data.PrenomUtilisateur);
         setEmail(data.Email);
-        setTele(data.Tele);
-        setAddress(data.Address);
-        setVille(data.Ville);
+        setTele(data.Tel);
+        setMagasin(data.magasin)
         setPoste(data.Poste);
       })
       .catch((err) => {
@@ -53,11 +64,8 @@ export default function Edit_User() {
   const ChangeTele = (event) => {
     setTele(event.target.value);
   };
-  const ChangeAddress = (event) => {
-    setAddress(event.target.value);
-  };
-  const ChangeVille = (event) => {
-    setVille(event.target.value);
+  const ChangeMagasin = (event) => {
+    setMagasin(event.target.value);
   };
 
   const HandleSubmit = () => {
@@ -66,10 +74,10 @@ export default function Edit_User() {
       NomUtilisateur: NomUtilisateur,
       PrenomUtilisateur: PrenomUtilisateur,
       Email: Email,
-      Poste: Poste,
+      Poste: CurrentUser.Poste === "super_admin" ? "admin" : Poste,
       Tele: Tele,
-      Address: Address,
-      Ville: Ville,
+      magasin: CurrentUser.Poste === "super_admin" ? magasin :CurrentUser.magasin ,
+
     };
 
     axios
@@ -121,34 +129,6 @@ export default function Edit_User() {
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleEmail">Email</label>
-                    <input
-                      name="Email"
-                      id="exampleEmail11"
-                      placeholder="E-mail"
-                      type="Email"
-                      className="form-control"
-                      onChange={(event) => ChangeEmail(event)}
-                      value={Email || ""}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="position-relative form-group">
-                    <label htmlFor="examplePoste">Poste Occupé</label>
-                    <input
-                      name="Poste"
-                      id="examplePoste"
-                      placeholder="Poste Occupé"
-                      type="text"
-                      className="form-control"
-                      onChange={(event) => ChangePoste(event)}
-                      value={Poste || ""}
-                    />
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="position-relative form-group">
                     <label htmlFor="exampleTele">Tele</label>
                     <input
                       name="Telee"
@@ -163,39 +143,67 @@ export default function Edit_User() {
                 </div>
                 <div className="col-md-6">
                   <div className="position-relative form-group">
-                    <label htmlFor="exampleAddress2">Address</label>
+                    <label htmlFor="exampleEmail">Email</label>
                     <input
-                      name="address"
-                      id="exampleAddress"
-                      placeholder="Apartment, studio ,or floor"
-                      type="text"
+                      name="Email"
+                      id="exampleEmail11"
+                      placeholder="E-mail"
+                      type="Email"
                       className="form-control"
-                      onChange={(event) => ChangeAddress(event)}
-                      value={Address || ""}
+                      onChange={(event) => ChangeEmail(event)}
+                      value={Email || ""}
                     />
                   </div>
                 </div>
-                <div className="col-md-6">
-                  <div className="position-relative form-group">
-                    <label htmlFor="exampleVille">Ville</label>
-                    <input
-                      name="Ville"
-                      id="exampleille"
-                      placeholder="Ville"
-                      type="text"
-                      className="form-control"
-                      onChange={(event) => ChangeVille(event)}
-                      value={Ville || ""}
-                    />
+              
+                {CurrentUser.Poste === "super_admin" ? null : (
+                  <div className="col-md-6">
+                    <div className="position-relative form-group">
+                      <label htmlFor="examplePoste">Poste Occupé</label>
+                      <select
+                        name="categorie"
+                        className="form-control"
+                        onChange={(event) => ChangePoste(event)}
+                        value={Poste || ""}
+
+                      >
+                        <option value="">Sélectionner Poste </option>
+                        <option value="RDS">Responsable de stock </option>
+                        <option value="RDA">Responsable d'achat </option>
+                      </select>
+                    </div>
                   </div>
-                </div>
+                )}
+                {CurrentUser.Poste === "super_admin" ? (
+                  <div className="col-md-6">
+                    <div className="position-relative form-group">
+                      <label htmlFor="examplePassword11">Magasin</label>
+                      <select
+                        name="categorie"
+                        className="form-control"
+                        onChange={(event) => ChangeMagasin(event)}
+                        value={magasin}
+                      >
+                        <option value="">Sélectionner Magasin </option>
+                        {DataMagasin?.map((value, i) => (
+                          <option key={i} value={value._id}>
+                            {value.nomMagasin}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                ) : null}
+              
+            
+             
               </div>
               <button
                 type="button"
                 onClick={HandleSubmit}
                 className="mt-2 btn btn-primary"
               >
-                Ajouter
+                Modifier
               </button>
             </form>
           </div>

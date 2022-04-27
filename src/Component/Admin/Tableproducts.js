@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Modal_delete from "./Modal_delete";
 import Banner from "../Banner";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../User_contex";
 
 export default function Tableproducts() {
   const [Products, setProducts] = useState([]);
   const [open, setOpen] = useState(false);
   const [ProductsSelected, setProductsSelected] = useState({});
+  const { CurrentUser, setCurrentUser } = useContext(UserContext);
+
   let navigate = useNavigate();
   const handleClickOpen = (products) => {
     setProductsSelected(products);
@@ -20,7 +23,6 @@ export default function Tableproducts() {
 
   useEffect(() => {
     getAllProducts();
-    
   }, []);
 
   const getAllProducts = () => {
@@ -45,7 +47,6 @@ export default function Tableproducts() {
               <table className="mb-0 table">
                 <thead>
                   <tr>
-                  <th>Nom magasin</th>
                     <th>categorie article</th>
                     <th>code</th>
                     <th>type</th>
@@ -53,29 +54,39 @@ export default function Tableproducts() {
                   </tr>
                 </thead>
                 <tbody>
-                  {Products?.map((value, i) => (
-                    <tr key={i}>
-                       <td>{value.magasin}</td>
-                      <td>{value.categorie}</td>
-                      <td>{value.Code_article}</td>
-                      <td>{value.type}</td>
-                      <td>
-                        <button className="mb-2 mr-2 btn-transition btn btn-outline-info"
-                          onClick={() => navigate("/EditProducts/" + value._id)}>
-                          <i className="pe-7s-pen" style={{ fontSize: 18 }}></i>
-                        </button>
-                        <button
-                          className="mb-2 mr-2 btn-transition btn btn-outline-danger"
-                          onClick={() => handleClickOpen(value)}
-                        >
-                          <i
-                            className="pe-7s-trash"
-                            style={{ fontSize: 18 }}
-                          ></i>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {Products?.map((value, i) => {
+                    if (CurrentUser.magasin === value.magasin) {
+                      return (
+                        <tr key={i}>
+                          <td>{value.categorie}</td>
+                          <td>{value.Code_article}</td>
+                          <td>{value.type}</td>
+                          <td>
+                            <button
+                              className="mb-2 mr-2 btn-transition btn btn-outline-info"
+                              onClick={() =>
+                                navigate("/EditProducts/" + value._id)
+                              }
+                            >
+                              <i
+                                className="pe-7s-pen"
+                                style={{ fontSize: 18 }}
+                              ></i>
+                            </button>
+                            <button
+                              className="mb-2 mr-2 btn-transition btn btn-outline-danger"
+                              onClick={() => handleClickOpen(value)}
+                            >
+                              <i
+                                className="pe-7s-trash"
+                                style={{ fontSize: 18 }}
+                              ></i>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    }
+                  })}
                 </tbody>
               </table>
               {open ? (

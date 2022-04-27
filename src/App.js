@@ -25,79 +25,75 @@ import Authentifier from "./Component/Login/Authentifier";
 import UserContext from "./User_contex";
 import { Fragment, useContext, useEffect } from "react";
 import Table_bonDachat from "./Component/Admin/Table_bonDachat";
+import Register from "./Component/Login/Register";
 
 function App() {
   const { CurrentUser, setCurrentUser } = useContext(UserContext);
   const valueUserContext = { CurrentUser, setCurrentUser };
-  useEffect(()=>{
-    // setInterval(()=>{
-    //   setCurrentUser(JSON.parse(localStorage.getItem("connected_user")||'{}'))
-
-    // },500)
-    },[CurrentUser])
+  useEffect(() => {
+    setCurrentUser(JSON.parse(localStorage.getItem("connected_user") || "{}"));
+  }, [CurrentUser]);
   return (
     <UserContext.Provider value={valueUserContext}>
       <div className="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
-      <BrowserRouter>
+        {CurrentUser.Poste === undefined ? (
+          <BrowserRouter>
+            <Routes>
+              <Route exact path="/" element={<Authentifier />} />
+              <Route exact path="/register" element={<Register />} />
+            </Routes>
+          </BrowserRouter>
+        ) : (
+          <BrowserRouter>
+            <NavBar />
 
-        <NavBar />
+            <div className="app-main">
+              <SideBar />
+              <div className="app-main__outer">
+                <Routes>
+                  <Route path="/" element={<Add_products />} />
+                  <Route path="/Tableproducts" element={<Tableproducts />} />
+                  <Route
+                    path="/Table_bonDachat"
+                    element={<Table_bonDachat />}
+                  />
+                  <Route path="/EditProducts/:id" element={<EditProducts />} />
+                  <Route path="/Add_Categorie" element={<Add_Categorie />} />
+                  <Route path="/TableCategorie" element={<TableCategorie />} />
 
-        <div className="app-main">
-            <SideBar />
-            <div className="app-main__outer">
-              <Routes>
-                {CurrentUser.Poste === undefined ? (
-                  <Route exact path="/" element={<Authentifier />} />
-                ) : (
-                  <Fragment>
-                    <Route path="/" element={<Add_products />} />
-                    <Route path="/Tableproducts" element={<Tableproducts />} />
-                    <Route path="/Table_bonDachat" element={<Table_bonDachat />} />
-                    <Route
-                      path="/EditProducts/:id"
-                      element={<EditProducts />}
-                    />
-                    <Route path="/Add_Categorie" element={<Add_Categorie />} />
-                    <Route
-                      path="/TableCategorie"
-                      element={<TableCategorie />}
-                    />
-
-                    <Route
-                      path="/EditCategorie/:id"
-                      element={<EditCategorie />}
-                    />
-                    <Route
-                      path="/Add_fournisseur"
-                      element={<Add_fournisseur />}
-                    />
-                    <Route
-                      path="/Tablefournisseur"
-                      element={<Tablefournisseur />}
-                    />
-                    <Route
-                      path="/EditFournisseur/:id"
-                      element={<EditFournisseur />}
-                    />
-                    <Route path="/Add_commande" element={<Add_commande />} />
-                    <Route path="/TableCommande" element={<TableCommande />} />
-                    <Route
-                      path="/Edit_Commande/:id"
-                      element={<Edit_commande />}
-                    />
-                    <Route path="/Add_user" element={<Add_User />} />
-                    <Route path="/Edit_user/:id" element={<Edit_User />} />
-                    <Route path="/tableUser" element={<TableUser />} />
-                    <Route path="/Addmagasin" element={<Add_magasin />} />
-                    <Route path="/TableMagasin" element={<TableMagasin />} />
-                    <Route path="/EditMagasin/:id" element={<EditMagasin />} />
-                  </Fragment>
-                )}
-              </Routes>
+                  <Route
+                    path="/EditCategorie/:id"
+                    element={<EditCategorie />}
+                  />
+                  <Route
+                    path="/Add_fournisseur"
+                    element={<Add_fournisseur />}
+                  />
+                  <Route
+                    path="/Tablefournisseur"
+                    element={<Tablefournisseur />}
+                  />
+                  <Route
+                    path="/EditFournisseur/:id"
+                    element={<EditFournisseur />}
+                  />
+                  <Route path="/Add_commande" element={<Add_commande />} />
+                  <Route path="/TableCommande" element={<TableCommande />} />
+                  <Route
+                    path="/Edit_Commande/:id"
+                    element={<Edit_commande />}
+                  />
+                  <Route path="/Add_user" element={<Add_User />} />
+                  <Route path="/Edit_user/:id" element={<Edit_User />} />
+                  <Route path="/tableUser" element={<TableUser />} />
+                  <Route path="/Addmagasin" element={<Add_magasin />} />
+                  <Route path="/TableMagasin" element={<TableMagasin />} />
+                  <Route path="/EditMagasin/:id" element={<EditMagasin />} />
+                </Routes>
+              </div>
             </div>
-        </div>
-        </BrowserRouter>
-
+          </BrowserRouter>
+        )}
       </div>
     </UserContext.Provider>
   );

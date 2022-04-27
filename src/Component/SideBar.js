@@ -81,6 +81,117 @@ export default function SideBar() {
                   <li>
                     <Link to="#">
                       <i className="metismenu-icon pe-7s-car" />
+                      Commande
+                      <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
+                    </Link>
+                    <ul>
+                      <li>
+                        <Link to="/TableCommande">
+                          <i className="metismenu-icon"> </i>Table Commande
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <Link to="#">
+                      <i className="metismenu-icon pe-7s-car" />
+                      Bon d'achat
+                      <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
+                    </Link>
+                    <ul>
+                      <li>
+                        <Link to="/Table_bonDachat">
+                          <i className="metismenu-icon"> </i>Table Bon d'achat
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                </Fragment>
+              ) : CurrentUser.Poste === "RDA" ? (
+                <Fragment>
+                  <li className="app-sidebar__heading">
+                    Dashboards Responsable d'achat
+                  </li>
+                  <li>
+                    <Link to="#">
+                      <i className="metismenu-icon pe-7s-car" />
+                      Commande
+                      <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
+                    </Link>
+                    <ul>
+                      <li>
+                        <Link to="Add_commande">
+                          <i className="metismenu-icon"> </i>
+                          Ajouter Commande
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="TableCommande">
+                          <i className="metismenu-icon"> </i>
+                          Tableau de Cammande
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                </Fragment>
+              ) : CurrentUser.Poste === "RDS" ? (
+                <Fragment>
+                  <li className="app-sidebar__heading">
+                    Dashboards Responsable de stock
+                  </li>
+                  <li>
+                    <Link to="#">
+                      <i className="metismenu-icon pe-7s-diamond" />
+                      Produits
+                      <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
+                    </Link>
+                    <ul>
+                      <li>
+                        <Link to="/">
+                          <i className="metismenu-icon" />
+                          Ajouter Produits
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="Tableproducts">
+                          <i className="metismenu-icon"> </i>Tableau de Produit
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                </Fragment>
+              ) : CurrentUser.Poste === "RDV" ? (
+                <Fragment></Fragment>
+              ) : CurrentUser.Poste === "super_admin" ? (
+                <Fragment>
+                  <li className="app-sidebar__heading">
+                    Dashboards Super Admin
+                  </li>
+                  <li>
+                    <Link to="#">
+                      <i className="metismenu-icon pe-7s-car" />
+                      Utilisateur
+                      <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
+                    </Link>
+                    <ul>
+                      <li>
+                        <Link to="Add_User">
+                          <i className="metismenu-icon pe-7s-display2" />
+                          Ajouter Admin
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="tableUser">
+                          <i className="metismenu-icon pe-7s-display2" />
+                          Tableau d'Admin
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li>
+                    <Link to="#">
+                      <i className="metismenu-icon pe-7s-car" />
                       Magasin
                       <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
                     </Link>
@@ -118,93 +229,10 @@ export default function SideBar() {
                           Fournisseur
                         </Link>
                       </li>
-                   
-                    </ul>
-                  </li>
-                  <li>
-                    <Link to="#">
-                      <i className="metismenu-icon pe-7s-car" />
-                      Commande
-                      <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
-                    </Link>
-                    <ul>
-                      <li>
-                        <Link to="/TableCommande">
-                          <i className="metismenu-icon"> </i>Table Commande
-                        </Link>
-                      </li>
-                     
-                    </ul>
-                  </li>
-                  <li>
-                    <Link to="#">
-                      <i className="metismenu-icon pe-7s-car" />
-                      Bon d'achat
-                      <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
-                    </Link>
-                    <ul>
-                      <li>
-                        <Link to="/Table_bonDachat">
-                          <i className="metismenu-icon"> </i>Table Bon d'achat
-                        </Link>
-                      </li>
-                     
                     </ul>
                   </li>
                 </Fragment>
-              ) : CurrentUser.Poste === "RDA" ? (
-                <Fragment>
-                  <li className="app-sidebar__heading">
-                    Dashboards Responsable d'achat
-                  </li>
-                  <li>
-                    <Link to="#">
-                      <i className="metismenu-icon pe-7s-car" />
-                      Commande
-                      <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
-                    </Link>
-                    <ul>
-                      <li>
-                        <Link to="Add_commande">
-                          <i className="metismenu-icon"> </i>
-                          Ajouter Commande
-                        </Link>
-                      </li>
-                      <li>
-                        <Link to="TableCommande">
-                          <i className="metismenu-icon"> </i>
-                          Tableau de Cammande
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
-                </Fragment>
-              ) : CurrentUser.Poste === "RDS" ?(<Fragment>
-              <li className="app-sidebar__heading">Dashboards Responsable de stock</li>
-              <li>
-              <Link to="#">
-                  <i className="metismenu-icon pe-7s-diamond" />
-                  Produits
-                  <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
-                </Link>
-                <ul>
-                  <li>
-                    <Link to="/">
-                      <i className="metismenu-icon" />
-                      Ajouter Produits
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="Tableproducts">
-                      <i className="metismenu-icon"> </i>Tableau de Produit
-                    </Link>
-                  </li>
-                  </ul>
-              </li>
-
-              </Fragment>):CurrentUser.Poste === "RDV"?(<Fragment></Fragment>):null}
-
-            
+              ) : null}
             </ul>
           </div>
         </div>

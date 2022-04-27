@@ -17,6 +17,8 @@ router.post("/Ajouter_Commande", (req, res) => {
     idFournisseur: req.body.idFournisseur,
     datecommande: req.body.datecommande,
     etat: req.body.etat,
+    magasin: req.body.magasin,
+    
 
   });
   commande.save();
@@ -24,6 +26,8 @@ router.post("/Ajouter_Commande", (req, res) => {
     message: "Commande added succesful",
   });
 });
+
+
 router.put("/Update_commande", (req, res) => {
   const commande = {
     _id: req.body._id,
@@ -34,6 +38,7 @@ router.put("/Update_commande", (req, res) => {
     idFournisseur: req.body.idFournisseur,
     datecommande: req.body.datecommande,
     etat: req.body.etat,
+    magasin: req.body.magasin,
 
   };
   console.log("gegegege",commande);
@@ -44,10 +49,9 @@ router.put("/Update_commande", (req, res) => {
   );
 });
 
+
 router.get("/get_Commande", (req, res) => {
-  Commande.find((err, docs) => {
-  
-  });
+
   Commande.find().populate({
     path:"idFournisseur",
   }).exec(function(err,docs){
@@ -60,6 +64,7 @@ router.get("/get_Commande", (req, res) => {
     }
   })
 });
+
 
 router.get("/get_commande_byId/:id", (req, res) => {
  Commande.findOne({ _id: req.params.id })
@@ -78,6 +83,8 @@ router.get("/get_commande_byId/:id", (req, res) => {
 });
 
 });
+
+
 router.get("/get_commande_etat", (req, res) => {
   Commande.find({ etat: "accepter"}).then((findedObject) => {
      if (findedObject) {
@@ -87,6 +94,7 @@ router.get("/get_commande_etat", (req, res) => {
      }
    });
  });
+
 
 router.delete("/delete_Commande/:id", (req, res) => {
   console.log("herreeeeeee id ", req.params.id);

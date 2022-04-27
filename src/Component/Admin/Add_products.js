@@ -1,9 +1,11 @@
 import axios from 'axios';
-import React, { useState, Fragment, useEffect } from 'react'
+import React, { useState, Fragment, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
+import UserContext from '../../User_contex';
 import Banner from '../Banner';
 
 export default function Add_products() {
+  const { CurrentUser, setCurrentUser } = useContext(UserContext);
 
   const [categorie, setCategorie] = useState("");
   const [reference, setReference] = useState("");
@@ -12,13 +14,9 @@ export default function Add_products() {
   const [type, settype] = useState("");
 
   const [categories, setCategories] = useState([]);
-  const [magasin, setMagasin] = useState([]);
-  const [dataMagasin, setDataMagasin] = useState([]);
   let navigate = useNavigate()
 
-  const ChangeMagasin = (event) => {
-    setMagasin(event.target.value);
-  };
+ 
   const ChangeCategorie = (event) => {
     setCategorie(event.target.value);
   };
@@ -38,14 +36,13 @@ export default function Add_products() {
 
   useEffect(() => {
     getAllCategorie();
-    getAllMagasin();
   }, []);
 
   const HandleSubmit = () => {
     let data = {
-      magasin: magasin,
+      magasin: CurrentUser.magasin,
       categorie: categorie,
-      lieu_de_stokagee: lieu_de_stokage,
+      lieu_de_stokage: lieu_de_stokage,
       reference: reference,
       Code_article: Code_article,
       type: type,
@@ -72,16 +69,7 @@ export default function Add_products() {
       console.log(error);
     });
   };
-  const getAllMagasin = () => {
-    axios
-      .get("http://localhost:3200/api/get_Mgasain")
-      .then((result) => {
-        setDataMagasin(result.data.Magasin);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+
 
   return (
     <Fragment>
@@ -92,21 +80,7 @@ export default function Add_products() {
             <h1 className="card-title">Remplir le formulaire</h1>
             <form>
               <div className="form-row">
-                <div className="col-md-6">
-                  <div className="position-relative form-group">
-                    <label htmlFor="examplePassword11">Magasin</label>
-                    <select
-                      name="categorie"
-                      className="form-control"
-                      onChange={(event) => ChangeMagasin(event)} >
-                      <option value="">Sélectionner Magasin </option>
-                      {dataMagasin?.map((value, i) => (
-                        <option
-                          key={i} value={value.nomMagasin}>{value.nomMagasin}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
+               
                 <div className="col-md-6">
                   <div className="position-relative form-group">
                     <label htmlFor="examplePassword11">Categorie Article</label>
@@ -117,7 +91,7 @@ export default function Add_products() {
                       <option value="">Sélectionner Categorie </option>
                       {categories?.map((value, i) => (
                         <option
-                          key={i} value={value.Categorie}>{value.Categorie}</option>
+                          key={i} value={value.categorie}>{value.categorie}</option>
                       ))}
                     </select>
                   </div>
