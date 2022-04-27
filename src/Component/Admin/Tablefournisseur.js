@@ -8,6 +8,7 @@ export default function Tablefournisseur() {
   const [fournisseur, setFournisseur] = useState([]);
     const [open, setOpen] = useState(false);
     const [FournisseurSelected, setFournisseurSelected] = useState({});
+    
     let navigate = useNavigate();
 
     useEffect(() => {

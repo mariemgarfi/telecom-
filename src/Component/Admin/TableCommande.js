@@ -18,7 +18,7 @@ export default function TableCommande() {
     axios
       .get("http://localhost:3200/api/get_Commande")
       .then((result) => {
-        console.log("heertedehud",result.data.data);
+        console.log("heertedehud", result.data.data);
         setCommande(result.data.data);
       })
       .catch((error) => {
@@ -46,32 +46,51 @@ export default function TableCommande() {
                   </tr>
                 </thead>
                 <tbody>
-                  {Commande?.map((value, i) => (
-                    <tr key={i}>
-                      <td>{value.nomarticle}</td>
-                      <td>{value.codearticle}</td>
-                      <td>{value.quantitearticl}</td>
-                      <td>{value.idFournisseur.nom} {value.idFournisseur.prenom}</td>
-                      <td>{value.datecommande}</td>
-                      <td style={{color:`${value.etat==="attente"?"orange":value.etat==="accepter"?"green":"red"}`}} >{value.etat}</td>
-
-                      <td>
-                        {CurrentUser.Poste === "admin" ? (
-                          <button
-                            className="mb-2 mr-2 btn-transition btn btn-outline-info"
-                            onClick={() =>
-                              navigate("/Edit_Commande/" + value._id)
-                            }
+                  {Commande?.map((value, i) => {
+                    if (CurrentUser.magasin === value.magasin) {
+                      return (
+                        <tr key={i}>
+                          <td>{value.nomarticle}</td>
+                          <td>{value.codearticle}</td>
+                          <td>{value.quantitearticl}</td>
+                          <td>
+                            {value.idFournisseur.nom}{" "}
+                            {value.idFournisseur.prenom}
+                          </td>
+                          <td>{value.datecommande}</td>
+                          <td
+                            style={{
+                              color: `${
+                                value.etat === "attente"
+                                  ? "orange"
+                                  : value.etat === "accepter"
+                                  ? "green"
+                                  : "red"
+                              }`,
+                            }}
                           >
-                            <i
-                              className="pe-7s-pen"
-                              style={{ fontSize: 18 }}
-                            ></i>
-                          </button>
-                        ) : null}
-                      </td>
-                    </tr>
-                  ))}
+                            {value.etat}
+                          </td>
+
+                          <td>
+                            {CurrentUser.Poste === "admin" ? (
+                              <button
+                                className="mb-2 mr-2 btn-transition btn btn-outline-info"
+                                onClick={() =>
+                                  navigate("/Edit_Commande/" + value._id)
+                                }
+                              >
+                                <i
+                                  className="pe-7s-pen"
+                                  style={{ fontSize: 18 }}
+                                ></i>
+                              </button>
+                            ) : null}
+                          </td>
+                        </tr>
+                      );
+                    }
+                  })}
                 </tbody>
               </table>
             </div>

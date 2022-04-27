@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Banner from "../Banner";
 import axios from "axios";
 import Modal_delete from "./Modal_delete";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../User_contex";
 
 export default function TableUser() {
   const [User, setUser] = useState([]);
   const [open, setOpen] = useState(false);
   const [userSelected, setUserSelected] = useState({});
+  const { CurrentUser, setCurrentUser } = useContext(UserContext);
+
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -54,34 +57,85 @@ export default function TableUser() {
                   </tr>
                 </thead>
                 <tbody>
-                  {User?.map((value, i) => (
-                    <tr key={i}>
-                      <td>{value.NomUtilisateur}</td>
-                      <td>{value.PrenomUtilisateur}</td>
-                      <td>{value.Poste}</td>
-                      <td>{value.Email}</td>
-                      <td>{value.Tele}</td>
+                  {User?.map((value, i) => {
+                    if (
+                      CurrentUser.Poste === "admin" &&
+                      value.magasin === CurrentUser.magasin
+                    ) {
+                      if (value.Poste === "RDS" || value.Poste === "RDA") {
+                        return (
+                          <tr key={i}>
+                            <td>{value.NomUtilisateur}</td>
+                            <td>{value.PrenomUtilisateur}</td>
+                            <td>{value.Poste}</td>
+                            <td>{value.Email}</td>
+                            <td>{value.Tele}</td>
 
-                      <td>
-                        <button
-                          className="mb-2 mr-2 btn-transition btn btn-outline-info"
-                          onClick={() => navigate("/Edit_user/" + value._id)}
-                        >
-                          <i className="pe-7s-pen" style={{ fontSize: 18 }}></i>
-                        </button>
-                        <button
-                          className="mb-2 mr-2 btn-transition btn btn-outline-danger"
-                          onClick={() => handleClickOpen(value)}
-                        >
-                          <i
-                            className="pe-7s-trash"
-                            style={{ fontSize: 18 }}
-                          ></i>
-                        </button>
+                            <td>
+                              <button
+                                className="mb-2 mr-2 btn-transition btn btn-outline-info"
+                                onClick={() =>
+                                  navigate("/Edit_user/" + value._id)
+                                }
+                              >
+                                <i
+                                  className="pe-7s-pen"
+                                  style={{ fontSize: 18 }}
+                                ></i>
+                              </button>
+                              <button
+                                className="mb-2 mr-2 btn-transition btn btn-outline-danger"
+                                onClick={() => handleClickOpen(value)}
+                              >
+                                <i
+                                  className="pe-7s-trash"
+                                  style={{ fontSize: 18 }}
+                                ></i>
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      }
+                    }
+                    if (
+                      CurrentUser.Poste === "super_admin" 
+                    ) {
+                      if (value.Poste === "admin" ) {
+                        return (
+                          <tr key={i}>
+                            <td>{value.NomUtilisateur}</td>
+                            <td>{value.PrenomUtilisateur}</td>
+                            <td>{value.Poste}</td>
+                            <td>{value.Email}</td>
+                            <td>{value.Tele}</td>
 
-                      </td>
-                    </tr>
-                  ))}
+                            <td>
+                              <button
+                                className="mb-2 mr-2 btn-transition btn btn-outline-info"
+                                onClick={() =>
+                                  navigate("/Edit_user/" + value._id)
+                                }
+                              >
+                                <i
+                                  className="pe-7s-pen"
+                                  style={{ fontSize: 18 }}
+                                ></i>
+                              </button>
+                              <button
+                                className="mb-2 mr-2 btn-transition btn btn-outline-danger"
+                                onClick={() => handleClickOpen(value)}
+                              >
+                                <i
+                                  className="pe-7s-trash"
+                                  style={{ fontSize: 18 }}
+                                ></i>
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      }
+                    }
+                  })}
                 </tbody>
               </table>
               {open ? (

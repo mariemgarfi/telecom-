@@ -1,22 +1,23 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import Banner from "../Banner";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import UserContext from "../../User_contex";
 
 export default function EditProducts() {
+  const { CurrentUser, setCurrentUser } = useContext(UserContext);
+
   const [categorie, setCategorie] = useState("");
   const [reference, setReference] = useState("");
   const [lieu_de_stokage, setLieu_de_stokage] = useState("");
   const [Code_article, setCode_article] = useState("");
   const [type, settype] = useState("");
   const [categories, setCategories] = useState([]);
-  const [magasin, setMagasin] = useState([]);
   let param = useParams();
   let navigate = useNavigate()
 
   useEffect(() => {
     getProductsById();
-    getAllMagasin();
     getAllCategorie();
   }, []);
 
@@ -26,7 +27,6 @@ export default function EditProducts() {
 
       .then((result) => {
         let data = result.data.Products;
-        setMagasin(data.magasin);
         setCategorie(data.categorie_article);
         setLieu_de_stokage(data.lieu_de_stokage);
         setReference(data.reference);
@@ -40,9 +40,7 @@ export default function EditProducts() {
       });
   };
 
-  const ChangeMagasin = (event) => {
-    setMagasin(event.target.value);
-  };
+
 
   const ChangeCategorie = (event) => {
     setCategorie(event.target.value);
@@ -73,23 +71,14 @@ export default function EditProducts() {
         console.log(error);
       });
   }
-  const getAllMagasin = () => {
-    axios
-      .get("http://localhost:3200/api/get_Mgasain")
-      .then((result) => {
-        setMagasin(result.data.Magasin);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+
 
   const HandleSubmit = () => {
     let data = {
       _id: param.id,
-      magasin:magasin,
+      magasin: CurrentUser.magasin,
       categorie: categorie,
-      lieu_de_stokagee: lieu_de_stokage,
+      lieu_de_stokage: lieu_de_stokage,
       reference: reference,
       Code_article: Code_article,
       type: type,
@@ -116,23 +105,7 @@ export default function EditProducts() {
             <h1 className="card-title">Remplir le formulaire</h1>
             <form>
               <div className="form-row">
-              <div className="col-md-6">
-                  <div className="position-relative form-group">
-                    <label htmlFor="examplePassword11">Magasin</label>
-                    <select
-                      name="categorie"
-                      className="form-control"
-                      onChange={(event) => ChangeMagasin(event)} 
-                       value={magasin} >
-
-                      <option value="">Sélectionner Magasin </option>
-                      {magasin?.map((value, i) => (
-                        <option
-                          key={i} value={value.nomMagasin}>{value.nomMagasin}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
+              
                 <div className="col-md-6">
                   <div className="position-relative form-group">
                     <label htmlFor="examplePassword11">Categorie Article</label>
@@ -142,7 +115,7 @@ export default function EditProducts() {
                       onChange={(event) => ChangeCategorie(event)}
                       value={categorie} >
 
-                      <option value="">Sélectionner Ctergorier </option>
+                      <option value="">Sélectionner categorie </option>
                       {categories?.map((value, i) => (
                         <option
                           key={i} value={value.categorie}>{value.categorie}</option>

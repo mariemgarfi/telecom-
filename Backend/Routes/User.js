@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../Models/User");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 router.post("/ajouter_Utilisateur", (req, res) => {
   console.log("heyyyytt req .body", req.body);
@@ -14,6 +14,30 @@ router.post("/ajouter_Utilisateur", (req, res) => {
       Tel: req.body.Tel,
       password: hash,
       magasin: req.body.magasin,
+    });
+
+    user.save(function (err) {
+      if (err) {
+        res.status(200).json({
+          message: "error",
+        });
+      } else {
+        res.status(200).json({
+          message: "user added succesful",
+        });
+      }
+    });
+  });
+});
+
+router.post("/add_super_admin", (req, res) => {
+  bcrypt.hash(req.body.password, 10).then((hash) => {
+    const user = new User({
+      NomUtilisateur: req.body.NomUtilisateur,
+      PrenomUtilisateur: req.body.PrenomUtilisateur,
+      Email: req.body.Email,
+      Poste: req.body.Poste,
+      password: hash,
     });
 
     user.save();
@@ -83,7 +107,7 @@ router.post("/login", (req, res) => {
     })
     .then((correctUserPwd) => {
       if (!correctUserPwd) {
-        console.log('correctUserPwd',correctUserPwd);
+        console.log("correctUserPwd", correctUserPwd);
 
         res.status(200).json({
           message: "1",

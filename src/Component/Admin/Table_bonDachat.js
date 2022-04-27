@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Banner from "../Banner";
 import ReactToPrint from "react-to-print";
+import UserContext from "../../User_contex";
 const pageStyle = `
 @media all {
   .page-header {
@@ -46,6 +47,8 @@ const pageStyle = `
 `;
 export default function Table_bonDachat() {
   const [bonDachat, setBonDachat] = useState([]);
+  const { CurrentUser, setCurrentUser } = useContext(UserContext);
+
   const myRef = useRef();
   let navigate = useNavigate();
   useEffect(() => {
@@ -81,34 +84,38 @@ export default function Table_bonDachat() {
                   </tr>
                 </thead>
                 <tbody>
-                  {bonDachat?.map((value, i) => (
-                    <tr key={i}>
-                      <td>{value.nomarticle}</td>
-                      <td>{value.nomarticle}</td>
-                      <td>{value.datecommande}</td>
+                  {bonDachat?.map((value, i) => {
+                    if (CurrentUser.magasin === value.magasin) {
+                      return (
+                        <tr key={i}>
+                          <td>{value.nomarticle}</td>
+                          <td>{value.nomarticle}</td>
+                          <td>{value.datecommande}</td>
 
-                      <td>
-                        <ReactToPrint
-                          trigger={() => {
-                            return (
-                              <a
-                                href="#"
-                                className="mb-2 mr-2 btn-transition btn btn-outline-info"
-                              >
-                                <i
-                                  className="pe-7s-print"
-                                  style={{ fontSize: 18 }}
-                                ></i>{" "}
-                              </a>
-                            );
-                          }}
-                          documentTitle="Bon d'achat telecom"
-                          content={() => myRef.current}
-                          pageStyle={pageStyle}
-                        />
-                      </td>
-                    </tr>
-                  ))}
+                          <td>
+                            <ReactToPrint
+                              trigger={() => {
+                                return (
+                                  <a
+                                    href="#"
+                                    className="mb-2 mr-2 btn-transition btn btn-outline-info"
+                                  >
+                                    <i
+                                      className="pe-7s-print"
+                                      style={{ fontSize: 18 }}
+                                    ></i>{" "}
+                                  </a>
+                                );
+                              }}
+                              documentTitle="Bon d'achat telecom"
+                              content={() => myRef.current}
+                              pageStyle={pageStyle}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    }
+                  })}
                 </tbody>
               </table>
             </div>

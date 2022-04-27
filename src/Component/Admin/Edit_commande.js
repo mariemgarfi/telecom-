@@ -1,7 +1,8 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import Banner from "../Banner";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import UserContext from "../../User_contex";
 
 export default function Edit_commande() {
   const [nomarticle, setNomarticle] = useState("");
@@ -11,6 +12,7 @@ export default function Edit_commande() {
   const [idFournisseur, setidFournisseur] = useState("");
   const [datecommande, setDatecommande] = useState("");
   const [etat, setEtat] = useState("");
+  const { CurrentUser, setCurrentUser } = useContext(UserContext);
 
   let param = useParams();
   let navigate = useNavigate();
@@ -30,7 +32,6 @@ export default function Edit_commande() {
         setidFournisseur(data.idFournisseur);
         setDatecommande(data.datecommande);
         setEtat(data.etat);
-        console.log("edsdeza",data);
       })
       .catch((err) => {
         console.log(err);
@@ -51,6 +52,8 @@ export default function Edit_commande() {
       idFournisseur: idFournisseur._id,
       datecommande: datecommande,
       etat: etat,
+      magasin:CurrentUser.magasin
+
     };
     console.log("here response", data);
     axios

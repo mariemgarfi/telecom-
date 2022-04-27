@@ -1,5 +1,6 @@
 import axios from "axios";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
+import UserContext from "../../User_contex";
 import Banner from "../Banner";
 
 export default function Add_commande() {
@@ -11,6 +12,7 @@ export default function Add_commande() {
   const [datecommande, setDatecommande] = useState("");
   const [Fournisseur, setFournisseur] = useState([]);
   const [categorie, setCategorie] = useState([]);
+  const { CurrentUser, setCurrentUser } = useContext(UserContext);
 
   useEffect(() => {
     getAllCategorie();
@@ -57,6 +59,7 @@ export default function Add_commande() {
       idFournisseur: idFournisseur,
       datecommande: datecommande,
       etat: "attente",
+      magasin:CurrentUser.magasin
     };
 
     axios
